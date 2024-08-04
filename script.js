@@ -28,6 +28,12 @@ keys.forEach((key) => {
 document.addEventListener("keydown", (event) => {
     const key = event.key.toUpperCase();
     if (key.length !== 1) {
+        if(key == "BACKSPACE"){
+            if(currentBox > 0){
+                currentBox--;
+                boxes[currentBox].innerHTML = "";
+            }
+        }
         return;
     }
     if(key >= 'A' && key <= 'Z'){
