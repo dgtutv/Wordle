@@ -7,6 +7,7 @@ fetch('https://cors-anywhere.herokuapp.com/https://gist.github.com/dracos/dd0668
   })
   .catch(error => console.error('Error fetching words:', error));
 
+//Getting user input from on screen keyboard
 let keys = document.querySelectorAll(".keyboardBox");
 keys.forEach((key) => {
     key.addEventListener('click', function(event){
@@ -16,6 +17,20 @@ keys.forEach((key) => {
             currentBox++;   
         }
     })
+});
+
+//Getting user input from physical keyboard
+document.addEventListener("keydown", (event) => {
+    const key = event.key.toLowerCase();
+    if (key.length !== 1) {
+        return;
+    }
+    if(key >= 'a' && key <= 'z'){
+        if(currentBox < 5){
+            boxes[currentBox].innerHTML = key;
+            currentBox++;
+        }
+    }
 });
 
 let currentBox = 0;
