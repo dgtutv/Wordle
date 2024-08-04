@@ -74,3 +74,21 @@ svg{
     height: 20px;
     fill: white;
 }
+
+@media screen and (max-width: 484px) {
+    #keyboard{
+        width: 100vw;
+    }
+    .keyboardBox{
+        width: 8vw;
+    }
+    .specialKey{
+        width: 12vw;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    #gameContainer{
+        width: 100vw;
+    }
+}
