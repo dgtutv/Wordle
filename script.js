@@ -3,7 +3,6 @@ fetch('https://cors-anywhere.herokuapp.com/https://gist.github.com/dracos/dd0668
   .then(response => response.text())
   .then(data => {
     const wordArray = data.split('\n').map(word => word.trim());
-    console.log(wordArray);
   })
   .catch(error => console.error('Error fetching words:', error));
 
@@ -11,8 +10,14 @@ fetch('https://cors-anywhere.herokuapp.com/https://gist.github.com/dracos/dd0668
 let keys = document.querySelectorAll(".keyboardBox");
 keys.forEach((key) => {
     key.addEventListener('click', function(event){
-        if(currentBox < 5){
-            let id = event.target.id;
+        let id = event.target.id;
+        if(id == "DELETE"){
+            if(currentBox > 0){
+                currentBox--;
+                boxes[currentBox].innerHTML = "";
+            }
+        }
+        else if(currentBox < 5){
             boxes[currentBox].innerHTML = id;
             currentBox++;   
         }
@@ -21,11 +26,11 @@ keys.forEach((key) => {
 
 //Getting user input from physical keyboard
 document.addEventListener("keydown", (event) => {
-    const key = event.key.toLowerCase();
+    const key = event.key.toUpperCase();
     if (key.length !== 1) {
         return;
     }
-    if(key >= 'a' && key <= 'z'){
+    if(key >= 'A' && key <= 'Z'){
         if(currentBox < 5){
             boxes[currentBox].innerHTML = key;
             currentBox++;
