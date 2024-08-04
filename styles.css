@@ -6,12 +6,45 @@ body{
     justify-content: center;
     color: white;
     font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
-    gap: 10px;
+    gap: 6px;
     padding: 10px;
+    font-weight: bold;
+}
+
+#gameContainer{
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    width: 300px; 
+    font-size: 32px;
+    margin: 10px;
+}
+
+#keyboard{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    width: 484px;
+    gap: 6px;
+    height: 184px;
+    font-size: 20px;
+}
+
+.keyboardRow{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
 .keyboardBox{
     background-color: rgb(130, 131, 133);
+    display: flex;
+    justify-content: center;   
+    align-items: center;
+    width: 43px;
+    height: 100%;
+    border-radius: 5px;
 }
 
 .correctLetter{
@@ -27,6 +60,17 @@ body{
 }
 
 .letterBox{
-    border: 1px solid rgb(58, 58, 58);
+    border: 2px solid rgb(58, 58, 58);
+    aspect-ratio: 1/1;
 }
 
+.specialKey{
+    width: 64px;
+    font-size: 12px;
+}
+
+svg{
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
