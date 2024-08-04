@@ -17,7 +17,7 @@ keys.forEach((key) => {
                 boxes[currentBox].innerHTML = "";
             }
         }
-        else if(currentBox < 5){
+        else if(currentBox < 5 && id.length == 1){
             boxes[currentBox].innerHTML = id;
             currentBox++;   
         }
