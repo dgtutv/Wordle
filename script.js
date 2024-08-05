@@ -24,7 +24,7 @@ keys.forEach((key) => {
                 currentCol = 0;
                 let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
                 //Current box has already been incremented 
-                //testWord(word);
+                guess(word);
                 console.log(word);
             }
         }
@@ -54,7 +54,7 @@ document.addEventListener("keydown", (event) => {
                 currentCol = 0;
                 let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
                 //Current box has already been incremented 
-                //testWord(word);
+                guess(word);
                 console.log(word);
             }
         }
@@ -70,6 +70,26 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
+//Function to handle guesses
+function guess(word){
+    for(let i=0; i<word.length; i++){
+        let boxIterator = currentBox-word.length+i;
+        if(word[i] == answer[i]){
+            //Green
+            boxes[boxIterator].classList.add("correctSpot");
+        }
+        else if(answer.includes(word[i])){
+            //Orange
+            boxes[boxIterator].classList.add("correctLetter");
+        }
+        else{
+            //Gray
+            boxes[boxIterator].classList.add("incorrectLetter");
+        }
+    }
+}
+
 let currentBox = 0;
 let currentCol = 0;
 let boxes = document.querySelectorAll(".letterBox");
+let answer = "trick".toUpperCase();
