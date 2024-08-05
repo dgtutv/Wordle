@@ -74,17 +74,21 @@ document.addEventListener("keydown", (event) => {
 function guess(word){
     for(let i=0; i<word.length; i++){
         let boxIterator = currentBox-word.length+i;
+        let currentKey = document.querySelector(`#${word[i]}`)
         if(word[i] == answer[i]){
             //Green
             boxes[boxIterator].classList.add("correctSpot");
+            currentKey.classList.add("correctSpot");
         }
         else if(answer.includes(word[i])){
             //Orange
             boxes[boxIterator].classList.add("correctLetter");
+            currentKey.classList.add("correctLetter");
         }
         else{
             //Gray
             boxes[boxIterator].classList.add("incorrectLetter");
+            currentKey.classList.add("incorrectLetter");
         }
     }
 }
