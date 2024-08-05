@@ -72,6 +72,7 @@ document.addEventListener("keydown", (event) => {
 
 //Function to handle guesses
 function guess(word){
+    let correctLetters = 0;
     for(let i=0; i<word.length; i++){
         let boxIterator = currentBox-word.length+i;
         let currentKey = document.querySelector(`#${word[i]}`)
@@ -79,6 +80,7 @@ function guess(word){
             //Green
             boxes[boxIterator].classList.add("correctSpot");
             currentKey.classList.add("correctSpot");
+            correctLetters++;
         }
         else if(answer.includes(word[i])){
             //Orange
@@ -90,6 +92,13 @@ function guess(word){
             boxes[boxIterator].classList.add("incorrectLetter");
             currentKey.classList.add("incorrectLetter");
         }
+    }
+    if(correctLetters == 5){
+        
+        alert("You win!");
+    }
+    else if(currentBox == 30){
+        alert(`You lose, word was: ${answer}`);
     }
 }
 
