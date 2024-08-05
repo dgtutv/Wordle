@@ -15,10 +15,12 @@ keys.forEach((key) => {
             if(currentBox > 0){
                 currentBox--;
                 boxes[currentBox].innerHTML = "";
+                boxes[currentBox].classList.toggle("candidate");
             }
         }
         else if(currentBox < 5 && id.length == 1){
             boxes[currentBox].innerHTML = id;
+            boxes[currentBox].classList.toggle("candidate");
             currentBox++;   
         }
     })
@@ -32,6 +34,7 @@ document.addEventListener("keydown", (event) => {
             if(currentBox > 0){
                 currentBox--;
                 boxes[currentBox].innerHTML = "";
+                boxes[currentBox].classList.toggle("candidate");
             }
         }
         return;
@@ -39,6 +42,7 @@ document.addEventListener("keydown", (event) => {
     if(key >= 'A' && key <= 'Z'){
         if(currentBox < 5){
             boxes[currentBox].innerHTML = key;
+            boxes[currentBox].classList.toggle("candidate");
             currentBox++;
         }
     }

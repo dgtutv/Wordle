@@ -79,6 +79,10 @@ body{
     -ms-user-select: none;
 }
 
+.candidate{
+    border: 2px solid rgb(88, 88, 88);
+}
+
 .specialKey{
     width: 64px;
     font-size: 12px;
