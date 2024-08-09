@@ -17,7 +17,6 @@ keys.forEach((key) => {
                 let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
                 //Current box has already been incremented 
                 guess(word);
-                console.log(word);
             }
         }
         else if(currentCol < 5 && id.length == 1){
@@ -47,7 +46,6 @@ document.addEventListener("keydown", (event) => {
                 let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
                 //Current box has already been incremented 
                 guess(word);
-                console.log(word);
             }
         }
         return;
@@ -64,6 +62,12 @@ document.addEventListener("keydown", (event) => {
 
 //Function to handle guesses
 function guess(word){
+    //Check if the word is in the guesses list
+    if(!guesses.includes(word.toLowerCase()) && !answers.includes(word.toLowerCase())){
+        alert("Invalid word.");
+        currentCol = 5;
+        return;
+    }
     let correctLetters = 0;
     for(let i=0; i<word.length; i++){
         let boxIterator = currentBox-word.length+i;
@@ -125,7 +129,6 @@ const boxes = document.querySelectorAll(".letterBox");
 const guesses = getGuesses();
 const answers = getAnswers();
 const answer = generateWord().toUpperCase();
-console.log(answer);
 
 function getAnswers(){
     const answers = [
