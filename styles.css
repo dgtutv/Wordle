@@ -70,16 +70,19 @@ body{
 .letterBox.correctLetter{
     background-color: rgb(181, 159, 58);
     border: 2px solid rgb(181, 159, 58);
+    animation: flip 0.8s ease forwards;
 }
 
 .letterBox.correctSpot{
     background-color: rgb(82, 141, 77);
     border: 2px solid rgb(82, 141, 77);
+    animation: flip 0.8s ease forwards;
 }
 
 .letterBox.incorrectLetter{
     background-color: rgb(58, 58, 58);
     border: 2px solid rgb(58, 58, 58);
+    animation: flip 0.8s ease forwards;
 }
 
 .letterBox{
@@ -109,6 +112,41 @@ svg{
     fill: white;
     pointer-events: none;
 }
+
+@keyframes flip{
+    0% {
+        transform: rotateX(0deg);
+    }
+
+    45%{
+        transform: rotateX(90deg)
+    }
+
+    55%{
+        transform: rotateX(90deg);
+    }
+
+    100%{
+        transform: rotateX(0deg);
+    }
+}
+
+#gameContainer > :nth-child(5n + 2){
+    animation-delay: .3s;
+}
+
+#gameContainer > :nth-child(5n + 3){
+    animation-delay: .5s;
+}
+
+#gameContainer > :nth-child(5n + 4){
+    animation-delay: .7s;
+}
+
+#gameContainer > :nth-child(5n + 5){
+    animation-delay: .9s;
+}
+
 
 @media screen and (max-width: 484px) {
     #keyboard{
