@@ -98,7 +98,7 @@ body{
 }
 
 .candidate{
-    border: 2px solid rgb(88, 88, 88);
+    animation: slam 0.1s ease-in-out forwards;
 }
 
 .specialKey{
@@ -140,19 +140,36 @@ svg{
 
 }
 
-#gameContainer > :nth-child(5n + 2){
+@keyframes slam{
+    0%{
+        transform: scale(1);
+        border: 2px solid rgb(58, 58, 58);
+    }
+
+    50%{
+        transform: scale(1.12);
+        border: 2px solid rgb(88, 88, 88);
+    }
+
+    100%{
+        transform: scale(1);
+        border: 2px solid rgb(88, 88, 88);
+    }
+}
+
+#gameContainer > :nth-child(5n + 2).filled{
     animation-delay: .3s;
 }
 
-#gameContainer > :nth-child(5n + 3){
+#gameContainer > :nth-child(5n + 3).filled{
     animation-delay: .5s;
 }
 
-#gameContainer > :nth-child(5n + 4){
+#gameContainer > :nth-child(5n + 4).filled{
     animation-delay: .7s;
 }
 
-#gameContainer > :nth-child(5n + 5){
+#gameContainer > :nth-child(5n + 5).filled{
     animation-delay: .9s;
 }
 

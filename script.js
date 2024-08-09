@@ -72,6 +72,7 @@ function guess(word){
     for(let i=0; i<word.length; i++){
         let boxIterator = currentBox-word.length+i;
         let currentKey = document.querySelector(`#${word[i]}`)
+        boxes[boxIterator].classList.add("filled");
         if(word[i] == answer[i]){
             //Green
             boxes[boxIterator].classList.add("correctSpot");
