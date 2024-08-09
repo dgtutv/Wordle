@@ -57,17 +57,29 @@ body{
 
 .correctLetter{
     background-color: rgb(181, 159, 58);
-    border-color: rgb(181, 159, 58);
 }
 
 .correctSpot{
     background-color: rgb(82, 141, 77);
-    border-color: rgb(82, 141, 77);
 }
 
 .incorrectLetter{
     background-color: rgb(58, 58, 58);
-    border-color: rgb(58, 58, 58);
+}
+
+.letterBox.correctLetter{
+    background-color: rgb(181, 159, 58);
+    border: 2px solid rgb(181, 159, 58);
+}
+
+.letterBox.correctSpot{
+    background-color: rgb(82, 141, 77);
+    border: 2px solid rgb(82, 141, 77);
+}
+
+.letterBox.incorrectLetter{
+    background-color: rgb(58, 58, 58);
+    border: 2px solid rgb(58, 58, 58);
 }
 
 .letterBox{
