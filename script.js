@@ -94,7 +94,7 @@ function guess(word){
         }
     }
     if(correctLetters == 5){
-        
+
         alert("You win!");
     }
     else if(currentBox == 30){
@@ -102,7 +102,33 @@ function guess(word){
     }
 }
 
+//Function to generate the word for the day
+function generateWord(){
+    const date = new Date();
+
+    //Generate a string for the date in YYYYMMDD format
+    const dateString = date.toISOString().split('T')[0].replace(/-/g, '');
+
+    //Hash our date string
+    function hashStringToNumber(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = (hash << 5) - hash + char;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return Math.abs(hash);
+    }
+
+    //Take the hash key as our seed, and pick our word
+    const seed = hashStringToNumber(dateString);
+    const randomIndex = seed % wordArray.length;
+    return wordArray[randomIndex];
+
+}
+
 let currentBox = 0;
 let currentCol = 0;
-let boxes = document.querySelectorAll(".letterBox");
-let answer = "trick".toUpperCase();
+const boxes = document.querySelectorAll(".letterBox");
+const answer = generateWord();
+console.log(answer);
