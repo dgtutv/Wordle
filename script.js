@@ -1,134 +1,139 @@
-//Pull valid wordle words
-fetch('https://cors-anywhere.herokuapp.com/https://gist.github.com/dracos/dd0668f281e685bad51479e5acaadb93/raw/valid-wordle-words.txt')
-  .then(response => response.text())
-  .then(data => {
-    const wordArray = data.split('\n').map(word => word.trim());
-  })
-  .catch(error => console.error('Error fetching words:', error));
-
-//Getting user input from on screen keyboard
-let keys = document.querySelectorAll(".keyboardBox");
-keys.forEach((key) => {
-    key.addEventListener('click', function(event){
-        let id = event.target.id;
-        if(id == "DELETE"){
-            if(currentCol > 0){
-                currentBox--;
-                currentCol--;
-                boxes[currentBox].innerHTML = "";
-                boxes[currentBox].classList.toggle("candidate");
-            }
-        }
-        else if(id == "ENTER"){
-            if(currentCol == 5){
-                currentCol = 0;
-                let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
-                //Current box has already been incremented 
-                guess(word);
-                console.log(word);
-            }
-        }
-        else if(currentCol < 5 && id.length == 1){
-            boxes[currentBox].innerHTML = id;
-            boxes[currentBox].classList.toggle("candidate");
-            currentBox++; 
-            currentCol++;  
-        }
+async function initializeGame(){
+    //Pull valid wordle words
+    var wordArray;
+    await fetch('https://cors-anywhere.herokuapp.com/https://gist.github.com/dracos/dd0668f281e685bad51479e5acaadb93/raw/valid-wordle-words.txt')
+    .then(response => response.text())
+    .then(data => {
+        wordArray = data.split('\n').map(word => word.trim());
     })
-});
+    .catch(error => console.error('Error fetching words:', error));
 
-//Getting user input from physical keyboard
-document.addEventListener("keydown", (event) => {
-    const key = event.key.toUpperCase();
-    if (key.length !== 1) {
-        if(key == "BACKSPACE"){
-            if(currentCol > 0){
-                currentBox--;
-                currentCol--;
-                boxes[currentBox].innerHTML = "";
+    //Getting user input from on screen keyboard
+    let keys = document.querySelectorAll(".keyboardBox");
+    keys.forEach((key) => {
+        key.addEventListener('click', function(event){
+            let id = event.target.id;
+            if(id == "DELETE"){
+                if(currentCol > 0){
+                    currentBox--;
+                    currentCol--;
+                    boxes[currentBox].innerHTML = "";
+                    boxes[currentBox].classList.toggle("candidate");
+                }
+            }
+            else if(id == "ENTER"){
+                if(currentCol == 5){
+                    currentCol = 0;
+                    let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
+                    //Current box has already been incremented 
+                    guess(word);
+                    console.log(word);
+                }
+            }
+            else if(currentCol < 5 && id.length == 1){
+                boxes[currentBox].innerHTML = id;
                 boxes[currentBox].classList.toggle("candidate");
+                currentBox++; 
+                currentCol++;  
+            }
+        })
+    });
+
+    //Getting user input from physical keyboard
+    document.addEventListener("keydown", (event) => {
+        const key = event.key.toUpperCase();
+        if (key.length !== 1) {
+            if(key == "BACKSPACE"){
+                if(currentCol > 0){
+                    currentBox--;
+                    currentCol--;
+                    boxes[currentBox].innerHTML = "";
+                    boxes[currentBox].classList.toggle("candidate");
+                }
+            }
+            else if(key == "ENTER"){
+                if(currentCol == 5){
+                    currentCol = 0;
+                    let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
+                    //Current box has already been incremented 
+                    guess(word);
+                    console.log(word);
+                }
+            }
+            return;
+        }
+        if(key >= 'A' && key <= 'Z'){
+            if(currentCol < 5){
+                boxes[currentBox].innerHTML = key;
+                boxes[currentBox].classList.toggle("candidate");
+                currentBox++;
+                currentCol++;
             }
         }
-        else if(key == "ENTER"){
-            if(currentCol == 5){
-                currentCol = 0;
-                let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
-                //Current box has already been incremented 
-                guess(word);
-                console.log(word);
+    });
+
+    //Function to handle guesses
+    function guess(word){
+        let correctLetters = 0;
+        for(let i=0; i<word.length; i++){
+            let boxIterator = currentBox-word.length+i;
+            let currentKey = document.querySelector(`#${word[i]}`)
+            if(word[i] == answer[i]){
+                //Green
+                boxes[boxIterator].classList.add("correctSpot");
+                currentKey.classList.add("correctSpot");
+                correctLetters++;
+            }
+            else if(answer.includes(word[i])){
+                //Orange
+                boxes[boxIterator].classList.add("correctLetter");
+                currentKey.classList.add("correctLetter");
+            }
+            else{
+                //Gray
+                boxes[boxIterator].classList.add("incorrectLetter");
+                currentKey.classList.add("incorrectLetter");
             }
         }
-        return;
-    }
-    if(key >= 'A' && key <= 'Z'){
-        if(currentCol < 5){
-            boxes[currentBox].innerHTML = key;
-            boxes[currentBox].classList.toggle("candidate");
-            currentBox++;
-            currentCol++;
-        }
-    }
-});
+        if(correctLetters == 5){
 
-//Function to handle guesses
-function guess(word){
-    let correctLetters = 0;
-    for(let i=0; i<word.length; i++){
-        let boxIterator = currentBox-word.length+i;
-        let currentKey = document.querySelector(`#${word[i]}`)
-        if(word[i] == answer[i]){
-            //Green
-            boxes[boxIterator].classList.add("correctSpot");
-            currentKey.classList.add("correctSpot");
-            correctLetters++;
+            alert("You win!");
         }
-        else if(answer.includes(word[i])){
-            //Orange
-            boxes[boxIterator].classList.add("correctLetter");
-            currentKey.classList.add("correctLetter");
-        }
-        else{
-            //Gray
-            boxes[boxIterator].classList.add("incorrectLetter");
-            currentKey.classList.add("incorrectLetter");
+        else if(currentBox == 30){
+            alert(`You lose, word was: ${answer}`);
         }
     }
-    if(correctLetters == 5){
 
-        alert("You win!");
+    //Function to generate the word for the day
+    function generateWord(){
+        const date = new Date();
+
+        //Generate a string for the date in YYYYMMDD format
+        const dateString = date.toISOString().split('T')[0].replace(/-/g, '');
+
+        //Hash our date string
+        function hashStringToNumber(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = (hash << 5) - hash + char;
+                hash |= 0; // Convert to 32bit integer
+            }
+            return Math.abs(hash);
+        }
+
+        //Take the hash key as our seed, and pick our word
+        const seed = hashStringToNumber(dateString);
+        const randomIndex = seed % wordArray.length;
+        return wordArray[randomIndex];
+
     }
-    else if(currentBox == 30){
-        alert(`You lose, word was: ${answer}`);
-    }
+
+    let currentBox = 0;
+    let currentCol = 0;
+    const boxes = document.querySelectorAll(".letterBox");
+    const answer = generateWord().toUpperCase();
+    console.log(answer);
 }
 
-//Function to generate the word for the day
-function generateWord(){
-    const date = new Date();
-
-    //Generate a string for the date in YYYYMMDD format
-    const dateString = date.toISOString().split('T')[0].replace(/-/g, '');
-
-    //Hash our date string
-    function hashStringToNumber(str) {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            const char = str.charCodeAt(i);
-            hash = (hash << 5) - hash + char;
-            hash |= 0; // Convert to 32bit integer
-        }
-        return Math.abs(hash);
-    }
-
-    //Take the hash key as our seed, and pick our word
-    const seed = hashStringToNumber(dateString);
-    const randomIndex = seed % wordArray.length;
-    return wordArray[randomIndex];
-
-}
-
-let currentBox = 0;
-let currentCol = 0;
-const boxes = document.querySelectorAll(".letterBox");
-const answer = generateWord();
-console.log(answer);
+initializeGame();
