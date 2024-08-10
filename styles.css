@@ -178,7 +178,7 @@ svg{
     font-size: 18px;
     background-color: white;
     color: black;
-    border-radius: 5px;    
+    border-radius: 5px; 
 }
 
 #errorList{
@@ -189,6 +189,7 @@ svg{
     justify-content: flex-start;
     gap: 12px;
     top: 5%;
+    z-index: 1000;
 }
 
 @media screen and (max-width: 484px) {
