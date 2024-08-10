@@ -207,6 +207,34 @@ svg{
     justify-content: space-between;
 }
 
+#overlay h1{
+    margin: 24px;
+}
+
+#overlay h2{
+    margin: 24px;
+}
+
+#buttons{
+    display: flex;
+    padding: 18px;
+    padding-top: 0px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 40px;
+}
+
+button{
+    padding: 18px;
+    font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 20px;
+    border-radius: 55px;
+    background-color: rgb(18, 18, 18);
+    border: 2px solid rgb(58, 58, 58);
+    color: white;
+}
+
 #abstractView{
     display: grid;
     grid-template-rows: repeat(6, 1fr);
@@ -219,6 +247,20 @@ svg{
     background-color: white;
     aspect-ratio: 1/1;
 }
+
+#close{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 2100;
+    fill: white;
+    width: 32px;
+    height: 32px;
+}
+
+#close:hover{
+    fill: gray;
+}/*enable mouse effects on overlay*/
 
 @media screen and (max-width: 484px) {
     #keyboard{
