@@ -47,6 +47,9 @@ document.addEventListener("keydown", (event) => {
                 //Current box has already been incremented 
                 guess(word);
             }
+            else{
+                inform("Not enough letters");
+            }
         }
         return;
     }
@@ -64,7 +67,7 @@ document.addEventListener("keydown", (event) => {
 function guess(word){
     //Check if the word is in the guesses list
     if(!guesses.includes(word.toLowerCase()) && !answers.includes(word.toLowerCase())){
-        alert("Invalid word.");
+        inform("Not in word list");
         currentCol = 5;
         return;
     }
@@ -91,11 +94,10 @@ function guess(word){
         }
     }
     if(correctLetters == 5){
-
-        alert("You win!");
+        inform("You win!");
     }
     else if(currentBox == 30){
-        alert(`You lose, word was: ${answer}`);
+        inform(`${answer}`);
     }
 }
 
@@ -122,6 +124,23 @@ function generateWord(){
     const randomIndex = seed % answers.length;
     return answers[randomIndex];
 
+}
+
+//Function to display messages to the user via overlay
+function inform(message){
+    const messageList = document.querySelector("#errorList");
+    let messageBox = document.createElement("div");
+    messageBox.classList.add("errorBox");
+    messageBox.innerHTML = message;
+    messageList.appendChild(messageBox);
+
+    setTimeout(function() {
+        informEnd(messageBox);
+    }, 1300);
+
+    function informEnd(messageBox){
+        messageBox.remove();
+    }
 }
 
 let currentBox = 0;
