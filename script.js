@@ -2,6 +2,9 @@
 let keys = document.querySelectorAll(".keyboardBox");
 keys.forEach((key) => {
     key.addEventListener('click', function(event){
+        if(gameOver){
+            return;
+        }
         let id = event.target.id;
         if(id == "DELETE"){
             if(currentCol > 0){
@@ -30,6 +33,9 @@ keys.forEach((key) => {
 
 //Getting user input from physical keyboard
 document.addEventListener("keydown", (event) => {
+    if(gameOver){
+        return;
+    }
     const key = event.key.toUpperCase();
     if (key.length !== 1) {
         if(key == "BACKSPACE"){
@@ -95,6 +101,7 @@ function guess(word){
     }
     if(correctLetters == 5){
         inform("You win!");
+        gameOver = true;
     }
     else if(currentBox == 30){
         inform(`${answer}`);
@@ -145,6 +152,7 @@ function inform(message){
 
 let currentBox = 0;
 let currentCol = 0;
+let gameOver = false;
 const boxes = document.querySelectorAll(".letterBox");
 const guesses = getGuesses();
 const answers = getAnswers();
