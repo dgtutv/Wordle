@@ -100,11 +100,10 @@ function guess(word){
         }
     }
     if(correctLetters == 5){
-        inform("You win!");
-        gameOver = true;
+        endGame(true, answer);
     }
     else if(currentBox == 30){
-        inform(`${answer}`);
+        endGame(false, answer);
     }
 }
 
@@ -143,12 +142,45 @@ function inform(message){
 
     setTimeout(function() {
         informEnd(messageBox);
-    }, 1300);
+    }, 1500);
 
     function informEnd(messageBox){
         messageBox.remove();
     }
 }
+
+//Function to handle game end 
+function endGame(win, answer){
+    if(win){
+        inform("You win!");
+    }
+    else{
+        inform(`Answer: ${answer}`);
+    }
+    
+    gameOver = true;
+
+    setTimeout(function(){
+        contEnd();
+    }, 3000);
+    
+    function contEnd(){
+        const overlay = document.querySelector("#overlay");
+        overlay.classList.toggle("hidden");
+        let abstractBoxes = document.querySelectorAll(".abstractBox");
+        let letterBoxes = document.querySelectorAll(".letterBox")
+        
+        //Setup the abstract boxes on the overlay
+        let i = 0;
+        abstractBoxes.forEach((box) => {
+            let letterBox = letterBoxes[i];
+            box.style.backgroundColor = letterBox.style.backgroundColor;
+            i++;
+        });
+    }
+}
+
+//Event handlers for overlay
 
 let currentBox = 0;
 let currentCol = 0;

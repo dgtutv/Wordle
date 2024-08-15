@@ -286,6 +286,10 @@ button:hover{
     background-color: rgb(82, 141, 77);
 }
 
+#overlay.hidden{
+    display: none;
+}
+
 @media screen and (max-width: 484px) {
     #keyboard{
         width: 100vw;
