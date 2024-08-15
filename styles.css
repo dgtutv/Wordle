@@ -256,11 +256,35 @@ button{
     fill: white;
     width: 32px;
     height: 32px;
+    fill: white;
+    pointer-events: auto;
 }
 
 #close:hover{
-    fill: gray;
-}/*enable mouse effects on overlay*/
+    fill: rgb(181, 58, 58);
+    cursor: pointer;
+}
+
+#close * {
+    fill: inherit;
+}
+
+button{
+    pointer-events: auto;
+}
+
+button:hover{
+    cursor: pointer;
+    border-color: white;
+}
+
+#statsBtn:hover{
+    background-color: rgb(181, 159, 58);
+}
+
+#practiceBtn:hover{
+    background-color: rgb(82, 141, 77);
+}
 
 @media screen and (max-width: 484px) {
     #keyboard{
