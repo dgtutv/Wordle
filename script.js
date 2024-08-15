@@ -171,12 +171,18 @@ function endGame(win, answer){
         let letterBoxes = document.querySelectorAll(".letterBox")
         
         //Setup the abstract boxes on the overlay
-        let i = 0;
-        abstractBoxes.forEach((box) => {
+        for(let i=0; i<abstractBoxes.length; i++){
             let letterBox = letterBoxes[i];
-            box.style.backgroundColor = letterBox.style.backgroundColor;
-            i++;
-        });
+            let abstractBox = abstractBoxes[i];
+            let backgroundColor = window.getComputedStyle(letterBox).backgroundColor;
+            if(backgroundColor == "rgba(0, 0, 0, 0)"){
+                abstractBox.style.backgroundColor = "rgb(58, 58, 58)";
+            }
+            else{
+                abstractBox.style.backgroundColor = backgroundColor;
+            }
+            console.log(window.getComputedStyle(letterBox).backgroundColor);
+        }
     }
 }
 
