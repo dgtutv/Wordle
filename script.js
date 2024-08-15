@@ -220,7 +220,6 @@ function practiceMode(){
         keys[i].classList.remove("incorrectLetter");
     }
     answer = answers[Math.floor(Math.random()*answers.length)].toUpperCase();
-    console.log(answer);
 }
 
 let currentBox = 0;
