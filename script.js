@@ -181,12 +181,47 @@ function endGame(win, answer){
             else{
                 abstractBox.style.backgroundColor = backgroundColor;
             }
-            console.log(window.getComputedStyle(letterBox).backgroundColor);
         }
     }
 }
 
 //Event handlers for overlay
+const closeBtn = document.querySelector("#close");
+const statsBtn = document.querySelector("#statsBtn");
+const practiceBtn = document.querySelector("#practiceBtn");
+const overlay = document.querySelector("#overlay");
+
+closeBtn.addEventListener('click', function(event){
+    overlay.classList.toggle("hidden");
+});
+
+statsBtn.addEventListener('click', function(event){
+    overlay.classList.toggle("hidden");
+    toggleStatsOverlay();    
+});
+
+practiceBtn.addEventListener('click', function(event){
+    overlay.classList.toggle("hidden");
+    practiceMode();
+});
+
+//Practice mode functionality
+function practiceMode(){
+    currentBox = 0;
+    currCol = 0;
+    gameOver = false;
+    for(let i=0; i<boxes.length; i++){
+        boxes[i].classList = "letterBox";
+        boxes[i].innerHTML = "";
+    }
+    for(let i=0; i<keys.length; i++){
+        keys[i].classList.remove("correctLetter");
+        keys[i].classList.remove("correctSpot");
+        keys[i].classList.remove("incorrectLetter");
+    }
+    answer = answers[Math.floor(Math.random()*answers.length)].toUpperCase();
+    console.log(answer);
+}
 
 let currentBox = 0;
 let currentCol = 0;
@@ -194,7 +229,7 @@ let gameOver = false;
 const boxes = document.querySelectorAll(".letterBox");
 const guesses = getGuesses();
 const answers = getAnswers();
-const answer = generateWord().toUpperCase();
+let answer = generateWord().toUpperCase();
 
 function getAnswers(){
     const answers = [
