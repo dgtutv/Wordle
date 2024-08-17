@@ -318,7 +318,7 @@ button:hover{
     color: white;
     height: 100%;
     width: 100%;
-    padding: 4px;
+    padding: 2px;
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -327,7 +327,35 @@ button:hover{
 
 .label{
     color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.15rem;
 }
+
+
+#statsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 24px;
+    font-weight: normal;
+}
+
+#statsContainer > div{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    width: 84px
+}
+
+.number{
+    font-size: 3rem;
+}
+
 
 @media screen and (max-width: 484px) {
     #keyboard{

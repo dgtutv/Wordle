@@ -1,3 +1,11 @@
+/* TODO:
+- Add different messages for which guess the user wins on
+- Add game statistics with played, win%, streak, max streak
+- Add share buttons
+- Add context menu at top of screen to go back to results and statistics screens
+- Make mobile compatible
+*/
+
 //Getting user input from on screen keyboard
 let keys = document.querySelectorAll(".keyboardBox");
 keys.forEach((key) => {
