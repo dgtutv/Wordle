@@ -108,11 +108,13 @@ function guess(word){
             currentKey.classList.add("incorrectLetter");
         }
     }
+    let round = Math.ceil(currentBox / 5);
+
     if(correctLetters == 5){        //Win Case
-        endGame(true, answer);
+        endGame(true, answer, round);
     }
     else if(currentBox == 30){      //Loss case
-        endGame(false, answer);
+        endGame(false, answer, round);
     }
 }
 
@@ -159,14 +161,54 @@ function inform(message){
 }
 
 //Function to handle game end 
-function endGame(win, answer){
+function endGame(win, answer, round){
     if(win){
         inform("You win!");
+        data.wonGames++;
+        switch(round) {
+            case 1:
+                data.oneGuessWin++;
+            case 2:
+                data.twoGuessWin++;
+            case 3:
+                data.threeGuessWin++;
+            case 4:
+                data.fourGuessWin++;
+            case 5:
+                data.fiveGuessWin++;
+            default:
+                data.sixGuessWin++;
+        }
     }
     else{
         inform(`Answer: ${answer}`);
+        data.lostGames++;
     }
-    
+
+    //Compare dates correctly by comparing their day, month, and year
+    const compareDates = (date1, date2) => {
+        return date1.getDate() === date2.getDate() &&
+            date1.getMonth() === date2.getMonth() &&
+            date1.getFullYear() === date2.getFullYear();
+    };
+
+    //Check date and update streaks accordingly
+    const currDate = new Date();
+    const prevDate = new Date(currDate);
+    prevDate.setDate(currDate.getDate() - 1);
+
+    let prevDateStamp = data.dateStamp;
+    if(compareDates(prevDateStamp, prevDate)){
+        data.currentStreak++;
+        data.longestStreak = Math.max(data.currentStreak, data.longestStreak);
+    }
+    else{
+        data.currentStreak = 0;
+    }
+    data.dateStamp = currDate;
+    localStorage.setItem("data", JSON.stringify(data));
+
+    //Inform user of result, update abstract boxes, bring up overlay
     gameOver = true;
 
     setTimeout(function(){
