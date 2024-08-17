@@ -317,7 +317,6 @@ button:hover{
     background-color: rgb(82, 141, 77);
     color: white;
     height: 100%;
-    width: 100%;
     padding: 2px;
     flex-grow: 1;
     display: flex;

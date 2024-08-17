@@ -1,6 +1,7 @@
 /* TODO:
 - Add different messages for which guess the user wins on
 - Add game statistics with played, win%, streak, max streak
+    -Collect data on local storage
 - Add share buttons
 - Add context menu at top of screen to go back to results and statistics screens
 - Make mobile compatible
@@ -230,6 +231,19 @@ function practiceMode(){
     answer = answers[Math.floor(Math.random()*answers.length)].toUpperCase();
 }
 
+//Function to pull data from local storage
+function pull(){
+    //Data: [numGames, wonGames, lostGames, oneGuessWin, twoGuessWin, threeGuessWin, fourGuessWin, fiveGuessWin, sixGuessWin, dateStamp, currentStreak, longestStreak];
+    let data;
+    if(localStorage.data){
+        data = Array(localStorage.data);
+    }
+    else{
+        data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
+    return data;
+}
+
 let currentBox = 0;
 let currentCol = 0;
 let gameOver = false;
@@ -237,6 +251,7 @@ const boxes = document.querySelectorAll(".letterBox");
 const guesses = getGuesses();
 const answers = getAnswers();
 let answer = generateWord().toUpperCase();
+let data = pull();
 
 function getAnswers(){
     const answers = [
