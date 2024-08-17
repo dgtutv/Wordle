@@ -108,10 +108,10 @@ function guess(word){
             currentKey.classList.add("incorrectLetter");
         }
     }
-    if(correctLetters == 5){
+    if(correctLetters == 5){        //Win Case
         endGame(true, answer);
     }
-    else if(currentBox == 30){
+    else if(currentBox == 30){      //Loss case
         endGame(false, answer);
     }
 }
@@ -236,12 +236,29 @@ function pull(){
     //Data: [numGames, wonGames, lostGames, oneGuessWin, twoGuessWin, threeGuessWin, fourGuessWin, fiveGuessWin, sixGuessWin, dateStamp, currentStreak, longestStreak];
     let data;
     if(localStorage.data){
-        data = Array(localStorage.data);
+        data = JSON.parse(data);
     }
     else{
-        data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        data = new Data(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
     return data;
+}
+
+//Data class for stats page
+class Data{
+    constructor(wonGames, lostGames, oneGuessWin, twoGuessWin, threeGuessWin, fourGuessWin, fiveGuessWin, sixGuessWin, dateStamp, currentStreak, longestStreak){
+        this.wonGames = wonGames;
+        this.lostGames = lostGames;
+        this.oneGuessWin = oneGuessWin;
+        this.twoGuessWin = twoGuessWin;
+        this.threeGuessWin = threeGuessWin;
+        this.fourGuessWin = fourGuessWin;
+        this.fiveGuessWin = fiveGuessWin;
+        this.sixGuessWin = sixGuessWin;
+        this.dateStamp = dateStamp;
+        this.currentStreak = currentStreak;
+        this.longestStreak = longestStreak;
+    }
 }
 
 let currentBox = 0;
