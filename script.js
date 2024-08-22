@@ -1,10 +1,13 @@
 /* TODO:
 - Add different messages for which guess the user wins on
 - Add game statistics with played, win%, streak, max streak
-    -Collect data on local storage
+    - Pull up stats overlay when button is pressed
+    - Update information within
 - Add share buttons
 - Add context menu at top of screen to go back to results and statistics screens
 - Make mobile compatible
+- When a user has already completed the daily level, the overlay should be displayed instead of the game
+    - There should also be a timer as to when the game can be played next.
 */
 
 //Getting user input from on screen keyboard
@@ -284,6 +287,22 @@ function practiceMode(){
         keys[i].classList.remove("incorrectLetter");
     }
     answer = answers[Math.floor(Math.random()*answers.length)].toUpperCase();
+}
+
+//Stats overlay functionality
+function toggleStatsOverlay(){
+    //Show the overlay
+    const statsOverlay = document.querySelector("#statsOverlay");
+    statsOverlay.classList.toggle("hidden");
+
+    //Update the stats section
+    const playedGames = document.querySelector("#playedGames > .number");
+    const winPercent = document.querySelector("#winPercent > .number");
+    const currStreak = document.querySelector("#currStreak > .number");
+    const maxStreak = document.querySelector("#maxStreak > .number");
+    
+
+    //Update the histogram
 }
 
 //Function to pull data from local storage
