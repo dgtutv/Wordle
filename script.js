@@ -300,7 +300,10 @@ function toggleStatsOverlay(){
     const winPercent = document.querySelector("#winPercent > .number");
     const currStreak = document.querySelector("#currStreak > .number");
     const maxStreak = document.querySelector("#maxStreak > .number");
-    
+    playedGames.innerHTML = data.wonGames + data.lostGames;
+    winPercent.innerHTML =  Math.trunc((data.wonGames / (data.wonGames + data.lostGames)) * 100);
+    currStreak.innerHTML = data.currentStreak;
+    maxStreak.innerHTML = data.longestStreak;
 
     //Update the histogram
 }
