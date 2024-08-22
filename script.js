@@ -208,8 +208,9 @@ function endGame(win, answer, round){
         prevDateStamp = prevDate;
     }
     else{
-        prevDateStamp = data.dateStamp;
+        prevDateStamp = new Date(data.dateStamp);   //create a date from the string
     }
+
     if(compareDates(prevDateStamp, prevDate)){
         data.currentStreak++;
         data.longestStreak = Math.max(data.currentStreak, data.longestStreak);
