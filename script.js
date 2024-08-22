@@ -290,7 +290,7 @@ function pull(){
     //Data: [numGames, wonGames, lostGames, oneGuessWin, twoGuessWin, threeGuessWin, fourGuessWin, fiveGuessWin, sixGuessWin, dateStamp, currentStreak, longestStreak];
     let data;
     if(localStorage.data){
-        data = JSON.parse(data);
+        data = JSON.parse(localStorage.data);
     }
     else{
         data = new Data(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
