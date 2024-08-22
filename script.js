@@ -168,16 +168,22 @@ function endGame(win, answer, round){
         switch(round) {
             case 1:
                 data.oneGuessWin++;
+                break;
             case 2:
                 data.twoGuessWin++;
+                break;
             case 3:
                 data.threeGuessWin++;
+                break;
             case 4:
                 data.fourGuessWin++;
+                break;
             case 5:
                 data.fiveGuessWin++;
+                break;
             default:
                 data.sixGuessWin++;
+                break;
         }
     }
     else{
@@ -197,7 +203,13 @@ function endGame(win, answer, round){
     const prevDate = new Date(currDate);
     prevDate.setDate(currDate.getDate() - 1);
 
-    let prevDateStamp = data.dateStamp;
+    let prevDateStamp;
+    if(data.dateStamp == 0){    //Date stamp has not been set
+        prevDateStamp = prevDate;
+    }
+    else{
+        prevDateStamp = data.dateStamp;
+    }
     if(compareDates(prevDateStamp, prevDate)){
         data.currentStreak++;
         data.longestStreak = Math.max(data.currentStreak, data.longestStreak);
