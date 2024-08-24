@@ -124,11 +124,10 @@ function guess(word){
 }
 
 //Function to generate the word for the day
-function generateWord(){
+function generateWord() {
+    //Get the user's local date
     const date = new Date();
-
-    //Generate a string for the date in YYYYMMDD format
-    const dateString = date.toISOString().split('T')[0].replace(/-/g, '');
+    const localDateString = date.toLocaleDateString('en-CA').replace(/-/g, '');
 
     //Hash our date string
     function hashStringToNumber(str) {
@@ -142,10 +141,9 @@ function generateWord(){
     }
 
     //Take the hash key as our seed, and pick our word
-    const seed = hashStringToNumber(dateString);
+    const seed = hashStringToNumber(localDateString);
     const randomIndex = seed % answers.length;
     return answers[randomIndex];
-
 }
 
 //Function to display messages to the user via overlay
