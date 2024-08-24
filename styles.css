@@ -250,12 +250,12 @@ button{
 
 #close{
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 20px;
+    right: 20px;
     z-index: 2100;
     fill: white;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     fill: white;
     pointer-events: auto;
 }
@@ -266,6 +266,27 @@ button{
 }
 
 #close * {
+    fill: inherit;
+}
+
+#home{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 2100;
+    fill: white;
+    width: 40px;
+    height: 40px;
+    fill: white;
+    pointer-events: auto;
+}
+
+#home:hover{
+    fill: rgb(82, 141, 77);
+    cursor: pointer;
+}
+
+#home * {
     fill: inherit;
 }
 
@@ -297,16 +318,16 @@ button:hover{
 #graphContainer{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 12px;
-    width: 25vw;
+    width: 35vw;
 }
 
 .row{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 12px;
     flex-grow: 0;
@@ -318,10 +339,11 @@ button:hover{
     color: white;
     height: 100%;
     padding: 2px;
-    flex-grow: 1;
+    flex-grow: 0;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    padding-right: 8px;
 }
 
 .label{

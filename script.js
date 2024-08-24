@@ -1,11 +1,10 @@
 /* TODO:
 - Add different messages for which guess the user wins on
-- Add game statistics with played, win%, streak, max streak
-    - Pull up stats overlay when button is pressed
-    - Update information within
 - Add share buttons
 - Add context menu at top of screen to go back to results and statistics screens
 - Make mobile compatible
+    - Fix double clicking
+    - Adjust vertical styling
 - When a user has already completed the daily level, the overlay should be displayed instead of the game
     - There should also be a timer as to when the game can be played next.
 */
@@ -163,6 +162,13 @@ function inform(message){
     }
 }
 
+//Compare dates correctly by comparing their day, month, and year
+function compareDates(date1, date2){
+    return date1.getDate() === date2.getDate() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getFullYear() === date2.getFullYear();
+};
+
 //Function to handle game end 
 function endGame(win, answer, round){
     if(win){
@@ -194,15 +200,7 @@ function endGame(win, answer, round){
         data.lostGames++;
     }
 
-    //Compare dates correctly by comparing their day, month, and year
-    const compareDates = (date1, date2) => {
-        return date1.getDate() === date2.getDate() &&
-            date1.getMonth() === date2.getMonth() &&
-            date1.getFullYear() === date2.getFullYear();
-    };
-
     //Check date and update streaks accordingly
-    const currDate = new Date();
     const prevDate = new Date(currDate);
     prevDate.setDate(currDate.getDate() - 1);
 
@@ -306,6 +304,18 @@ function toggleStatsOverlay(){
     maxStreak.innerHTML = data.longestStreak;
 
     //Update the histogram
+    const rows = document.querySelectorAll(".row > .bar");
+    const wins = [data.oneGuessWin, data.twoGuessWin, data.threeGuessWin, data.fourGuessWin, data.fiveGuessWin, data.sixGuessWin];
+    let max = data.oneGuessWin;
+    for(let i=0; i<wins.length; i++){
+        max = Math.max(max, wins[i]);
+    }
+    for(let i=0; i<rows.length; i++){
+        rows[i].style.width = `${wins[i] / max * 100}%`;
+        if(wins[i] > 0){
+            rows[i].innerHTML = `${wins[i]}`;
+        }
+    }
 }
 
 //Function to pull data from local storage
@@ -338,14 +348,27 @@ class Data{
     }
 }
 
+const homeButtons = document.querySelectorAll("#home");
+homeButtons.forEach((home) =>{
+    home.addEventListener('click', function(event){
+        //Find the screen the user is on and hide it
+        //Show the home overlay
+    });
+});
+
 let currentBox = 0;
 let currentCol = 0;
-let gameOver = false;
 const boxes = document.querySelectorAll(".letterBox");
 const guesses = getGuesses();
 const answers = getAnswers();
 let answer = generateWord().toUpperCase();
 let data = pull();
+const currDate = new Date();
+const dateStamp = new Date(data.dateStamp);
+if(compareDates(currDate, dateStamp)){
+    //Pull up version of overlay with different text, since user has already played
+}
+let gameOver = false;
 
 function getAnswers(){
     const answers = [
