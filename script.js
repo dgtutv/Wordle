@@ -6,7 +6,10 @@
     - Adjust vertical styling
 - When a user has already completed the daily level, the overlay should be displayed instead of the game
     - There should also be a timer as to when the game can be played next.
-- Practice mode should not contribute to overlay shown
+    - Adjust new words to be according to the user's timezone
+    - Save the old guesses into local storage, and display when the user comes back
+    - Display the old abstract boxes via the old guesses in local storage.
+- Practice mode can contribute to overlay shown, given the old guesses are available upon refresh
 */
 
 //Getting user input from on screen keyboard
@@ -378,6 +381,9 @@ const currDate = new Date();
 const dateStamp = new Date(data.dateStamp);
 if(compareDates(currDate, dateStamp)){
     //Pull up version of overlay with different text, since user has already played
+    overlay.classList.toggle("hidden");
+    const overlayTitle = document.querySelector("#overlay > h1");
+    overlayTitle.innerHTML = "Puzzle completed for the day!";
 }
 let gameOver = false;
 let isPractice = false;   //Used to prevent local storage manipulation
