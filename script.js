@@ -348,12 +348,16 @@ class Data{
     }
 }
 
-const homeButtons = document.querySelectorAll("#home");
-homeButtons.forEach((home) =>{
-    home.addEventListener('click', function(event){
-        //Find the screen the user is on and hide it
-        //Show the home overlay
-    });
+const homeButton = document.querySelector("#home");
+home.addEventListener('click', function(event){
+    const statsOverlay = document.querySelector("#statsOverlay");
+    if(!statsOverlay.classList.contains("hidden")){  //Stats overlay is active
+        statsOverlay.classList.toggle("hidden");
+        overlay.classList.toggle("hidden");
+    }
+    else if(overlay.classList.contains("hidden")){  //No overlay is active
+        overlay.classList.toggle("hidden");
+    }
 });
 
 let currentBox = 0;
