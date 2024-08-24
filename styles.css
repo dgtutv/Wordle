@@ -282,7 +282,7 @@ button{
 }
 
 #home:hover{
-    fill: rgb(82, 141, 77);
+    fill: rgb(77, 141, 127);
     cursor: pointer;
 }
 
@@ -321,7 +321,7 @@ button:hover{
     justify-content: flex-start;
     align-items: center;
     gap: 12px;
-    width: 35vw;
+    width: 400px;
 }
 
 .row{
