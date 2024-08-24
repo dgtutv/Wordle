@@ -1,12 +1,12 @@
 /* TODO:
 - Add different messages for which guess the user wins on
 - Add share buttons
-- Add context menu at top of screen to go back to results and statistics screens
 - Make mobile compatible
     - Fix double clicking
     - Adjust vertical styling
 - When a user has already completed the daily level, the overlay should be displayed instead of the game
     - There should also be a timer as to when the game can be played next.
+- Practice mode should not contribute to overlay shown
 */
 
 //Getting user input from on screen keyboard
@@ -174,54 +174,60 @@ function endGame(win, answer, round){
     if(win){
         inform("You win!");
         data.wonGames++;
-        switch(round) {
-            case 1:
-                data.oneGuessWin++;
-                break;
-            case 2:
-                data.twoGuessWin++;
-                break;
-            case 3:
-                data.threeGuessWin++;
-                break;
-            case 4:
-                data.fourGuessWin++;
-                break;
-            case 5:
-                data.fiveGuessWin++;
-                break;
-            default:
-                data.sixGuessWin++;
-                break;
+        if(!isPractice){
+            switch(round) {
+                case 1:
+                    data.oneGuessWin++;
+                    break;
+                case 2:
+                    data.twoGuessWin++;
+                    break;
+                case 3:
+                    data.threeGuessWin++;
+                    break;
+                case 4:
+                    data.fourGuessWin++;
+                    break;
+                case 5:
+                    data.fiveGuessWin++;
+                    break;
+                default:
+                    data.sixGuessWin++;
+                    break;
+            }
         }
     }
     else{
         inform(`Answer: ${answer}`);
-        data.lostGames++;
+        if(!isPractice){
+            data.lostGames++;
+        }
     }
 
     //Check date and update streaks accordingly
-    const prevDate = new Date(currDate);
-    prevDate.setDate(currDate.getDate() - 1);
+    if(!isPractice){
+        const prevDate = new Date(currDate);
+        prevDate.setDate(currDate.getDate() - 1);
 
-    let prevDateStamp;
-    if(data.dateStamp == 0){    //Date stamp has not been set
-        prevDateStamp = prevDate;
-    }
-    else{
-        prevDateStamp = new Date(data.dateStamp);   //create a date from the string
-    }
+        let prevDateStamp;
+        if(data.dateStamp == 0){    //Date stamp has not been set
+            prevDateStamp = prevDate;
+        }
+        else{
+            prevDateStamp = new Date(data.dateStamp);   //create a date from the string
+        }
 
-    if(compareDates(prevDateStamp, prevDate)){
-        data.currentStreak++;
-        data.longestStreak = Math.max(data.currentStreak, data.longestStreak);
+        if(compareDates(prevDateStamp, prevDate)){
+            data.currentStreak++;
+            data.longestStreak = Math.max(data.currentStreak, data.longestStreak);
+        }
+        else{
+            data.currentStreak = 0;
+        }
+        data.dateStamp = currDate;
+        localStorage.setItem("data", JSON.stringify(data));
     }
-    else{
-        data.currentStreak = 0;
-    }
-    data.dateStamp = currDate;
-    localStorage.setItem("data", JSON.stringify(data));
-
+        
     //Inform user of result, update abstract boxes, bring up overlay
     gameOver = true;
 
@@ -275,6 +281,7 @@ function practiceMode(){
     currentBox = 0;
     currCol = 0;
     gameOver = false;
+    isPractice = true;
     for(let i=0; i<boxes.length; i++){
         boxes[i].classList = "letterBox";
         boxes[i].innerHTML = "";
@@ -373,6 +380,7 @@ if(compareDates(currDate, dateStamp)){
     //Pull up version of overlay with different text, since user has already played
 }
 let gameOver = false;
+let isPractice = false;   //Used to prevent local storage manipulation
 
 function getAnswers(){
     const answers = [
