@@ -113,7 +113,10 @@ function guess(word, message){
     }
     let round = Math.ceil(currentBox / 5);
 
-    data.previousGuesses[round-1] = word;   //Write in the old guesses for if the user comes back
+    //Write in the old guesses for if the user comes back, and save to the local storage
+    data.previousGuesses[round-1] = word;   
+    data.dateStamp = currDate;
+    localStorage.setItem("data", JSON.stringify(data));
 
     if(correctLetters == 5){        //Win Case
         endGame(true, answer, round, message);
