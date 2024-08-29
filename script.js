@@ -7,6 +7,8 @@
 - When a user has already completed the daily level, the overlay should be displayed instead of the game
     - Save the old guesses into local storage, and display when the user comes back
     - Display the old abstract boxes via the old guesses in local storage.
+    - Make sure the daily level is complete, if not we should show the game 
+      screen with previous guesses, and an ability to continue playing
 - Practice mode can contribute to overlay shown, given the old guesses are available upon refresh
 */
 
