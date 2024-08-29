@@ -5,8 +5,6 @@
     - Fix double clicking
     - Adjust vertical styling
 - When a user has already completed the daily level, the overlay should be displayed instead of the game
-    - There should also be a timer as to when the game can be played next.
-    - Adjust new words to be according to the user's timezone
     - Save the old guesses into local storage, and display when the user comes back
     - Display the old abstract boxes via the old guesses in local storage.
 - Practice mode can contribute to overlay shown, given the old guesses are available upon refresh
@@ -33,7 +31,7 @@ keys.forEach((key) => {
                 currentCol = 0;
                 let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
                 //Current box has already been incremented 
-                guess(word);
+                guess(word, true);
             }
         }
         else if(currentCol < 5 && id.length == 1){
@@ -65,7 +63,7 @@ document.addEventListener("keydown", (event) => {
                 currentCol = 0;
                 let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
                 //Current box has already been incremented 
-                guess(word);
+                guess(word, true);
             }
             else{
                 inform("Not enough letters");
@@ -84,7 +82,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 //Function to handle guesses
-function guess(word){
+function guess(word, message){
     //Check if the word is in the guesses list
     if(!guesses.includes(word.toLowerCase()) && !answers.includes(word.toLowerCase())){
         inform("Not in word list");
@@ -115,11 +113,13 @@ function guess(word){
     }
     let round = Math.ceil(currentBox / 5);
 
+    data.previousGuesses[round-1] = word;   //Write in the old guesses for if the user comes back
+
     if(correctLetters == 5){        //Win Case
-        endGame(true, answer, round);
+        endGame(true, answer, round, message);
     }
     else if(currentBox == 30){      //Loss case
-        endGame(false, answer, round);
+        endGame(false, answer, round, message);
     }
 }
 
@@ -171,9 +171,11 @@ function compareDates(date1, date2){
 };
 
 //Function to handle game end 
-function endGame(win, answer, round){
+function endGame(win, answer, round, message){
     if(win){
-        inform("You win!");
+        if(message){
+            inform("You win!");
+        }
         data.wonGames++;
         if(!isPractice){
             switch(round) {
@@ -199,7 +201,9 @@ function endGame(win, answer, round){
         }
     }
     else{
-        inform(`Answer: ${answer}`);
+        if(message){
+            inform(`Answer: ${answer}`);
+        }
         if(!isPractice){
             data.lostGames++;
         }
@@ -334,14 +338,14 @@ function pull(){
         data = JSON.parse(localStorage.data);
     }
     else{
-        data = new Data(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        data = new Data(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, []);
     }
     return data;
 }
 
 //Data class for stats page
 class Data{
-    constructor(wonGames, lostGames, oneGuessWin, twoGuessWin, threeGuessWin, fourGuessWin, fiveGuessWin, sixGuessWin, dateStamp, currentStreak, longestStreak){
+    constructor(wonGames, lostGames, oneGuessWin, twoGuessWin, threeGuessWin, fourGuessWin, fiveGuessWin, sixGuessWin, dateStamp, currentStreak, longestStreak, previousGuesses){
         this.wonGames = wonGames;
         this.lostGames = lostGames;
         this.oneGuessWin = oneGuessWin;
@@ -353,6 +357,7 @@ class Data{
         this.dateStamp = dateStamp;
         this.currentStreak = currentStreak;
         this.longestStreak = longestStreak;
+        this.previousGuesses = previousGuesses;
     }
 }
 
@@ -377,11 +382,24 @@ let answer = generateWord().toUpperCase();
 let data = pull();
 const currDate = new Date();
 const dateStamp = new Date(data.dateStamp);
+
 if(compareDates(currDate, dateStamp)){
     //Pull up version of overlay with different text, since user has already played
     overlay.classList.toggle("hidden");
     const overlayTitle = document.querySelector("#overlay > h1");
     overlayTitle.innerHTML = "Puzzle completed for the day!";
+
+    //Display the old guesses in the boxes
+    let currentBox = 0;
+    for(let i=0; i<data.previousGuesses.length; i++){
+        let currentWord = data.previousGuesses[i];
+        for(let j=0; j<currentWord.length; j++){
+            boxes[currentBox].innerHTML = currentWord[j];   //Write the corresponding letter
+            currentBox++;
+        }
+        //After each word, call guess to color the boxes
+        guess(currentWord, false);
+    }
 }
 let gameOver = false;
 let isPractice = false;   //Used to prevent local storage manipulation
