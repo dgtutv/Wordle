@@ -4,12 +4,10 @@
 - Make mobile compatible
     - Fix double clicking
     - Adjust vertical styling
-- When a user has already completed the daily level, the overlay should be displayed instead of the game
-    - Save the old guesses into local storage, and display when the user comes back
-    - Display the old abstract boxes via the old guesses in local storage.
-    - Make sure the daily level is complete, if not we should show the game 
-      screen with previous guesses, and an ability to continue playing
 - Practice mode can contribute to overlay shown, given the old guesses are available upon refresh
+- When a user returns to the game, and they have not completed all guesses, they should be able
+  to continue from where they left off
+- Refreshing the page should not contribute to local storage
 */
 
 //Getting user input from on screen keyboard
@@ -384,15 +382,16 @@ let answer = generateWord().toUpperCase();
 let data = pull();
 const currDate = new Date();
 const dateStamp = new Date(data.dateStamp);
+let gameOver = false;
+let isPractice = false;   //Used to prevent local storage manipulation
 
 if(compareDates(currDate, dateStamp)){
     //Pull up version of overlay with different text, since user has already played
-    overlay.classList.toggle("hidden");
-    const overlayTitle = document.querySelector("#overlay > h1");
+    //TODO: Should depend on whether user has completed current level
+    const overlayTitle = document.querySelector("#overlay > h1");   
     overlayTitle.innerHTML = "Puzzle completed for the day!";
 
     //Display the old guesses in the boxes
-    let currentBox = 0;
     for(let i=0; i<data.previousGuesses.length; i++){
         let currentWord = data.previousGuesses[i];
         for(let j=0; j<currentWord.length; j++){
@@ -403,8 +402,6 @@ if(compareDates(currDate, dateStamp)){
         guess(currentWord, false);
     }
 }
-let gameOver = false;
-let isPractice = false;   //Used to prevent local storage manipulation
 
 function getAnswers(){
     const answers = [
