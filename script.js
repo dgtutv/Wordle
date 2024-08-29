@@ -385,9 +385,9 @@ const dateStamp = new Date(data.dateStamp);
 let gameOver = false;
 let isPractice = false;   //Used to prevent local storage manipulation
 
+//Datestamp will only be the same if the level is already completed
 if(compareDates(currDate, dateStamp)){
     //Pull up version of overlay with different text, since user has already played
-    //TODO: Should depend on whether user has completed current level
     const overlayTitle = document.querySelector("#overlay > h1");   
     overlayTitle.innerHTML = "Puzzle completed for the day!";
 
