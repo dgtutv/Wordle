@@ -5,9 +5,6 @@
     - Fix double clicking
     - Adjust vertical styling
 - Practice mode can contribute to overlay shown, given the old guesses are available upon refresh
-- When a user returns to the game, and they have not completed all guesses, they should be able
-  to continue from where they left off
-- Refreshing the page should not contribute to local storage
 */
 
 //Getting user input from on screen keyboard
@@ -174,14 +171,14 @@ function compareDates(date1, date2){
 };
 
 //Function to handle game end 
-function endGame(win, answer, round, message){
+function endGame(win, answer, round, message) {
     if(win){
         if(message){
             inform("You win!");
         }
-        data.wonGames++;
-        if(!isPractice){
-            switch(round) {
+        if(!data.wonToday) {       //Update stats only if not already won today
+            data.wonGames++;
+            switch (round) {
                 case 1:
                     data.oneGuessWin++;
                     break;
@@ -201,8 +198,9 @@ function endGame(win, answer, round, message){
                     data.sixGuessWin++;
                     break;
             }
+            data.wonToday = true;
         }
-    }
+    } 
     else{
         if(message){
             inform(`Answer: ${answer}`);
@@ -213,56 +211,57 @@ function endGame(win, answer, round, message){
     }
 
     //Check date and update streaks accordingly
-    if(!isPractice){
+    if(!isPractice) {
         const prevDate = new Date(currDate);
         prevDate.setDate(currDate.getDate() - 1);
 
         let prevDateStamp;
-        if(data.dateStamp == 0){    //Date stamp has not been set
+        if(data.dateStamp == 0) {    //Date stamp has not been set
             prevDateStamp = prevDate;
-        }
+        } 
         else{
             prevDateStamp = new Date(data.dateStamp);   //create a date from the string
         }
 
-        if(compareDates(prevDateStamp, prevDate)){
+        if(compareDates(prevDateStamp, prevDate)) {
             data.currentStreak++;
             data.longestStreak = Math.max(data.currentStreak, data.longestStreak);
-        }
+        } 
         else{
             data.currentStreak = 0;
         }
         data.dateStamp = currDate;
-        localStorage.setItem("data", JSON.stringify(data));
     }
-        
+
+    localStorage.setItem("data", JSON.stringify(data));
+
     //Inform user of result, update abstract boxes, bring up overlay
     gameOver = true;
 
-    setTimeout(function(){
+    setTimeout(function () {
         contEnd();
     }, 3000);
-    
-    function contEnd(){
+
+    function contEnd() {
         const overlay = document.querySelector("#overlay");
         overlay.classList.toggle("hidden");
         let abstractBoxes = document.querySelectorAll(".abstractBox");
-        let letterBoxes = document.querySelectorAll(".letterBox")
-        
+        let letterBoxes = document.querySelectorAll(".letterBox");
+
         //Setup the abstract boxes on the overlay
-        for(let i=0; i<abstractBoxes.length; i++){
+        for (let i = 0; i < abstractBoxes.length; i++) {
             let letterBox = letterBoxes[i];
             let abstractBox = abstractBoxes[i];
             let backgroundColor = window.getComputedStyle(letterBox).backgroundColor;
-            if(backgroundColor == "rgba(0, 0, 0, 0)"){
+            if (backgroundColor == "rgba(0, 0, 0, 0)") {
                 abstractBox.style.backgroundColor = "rgb(58, 58, 58)";
-            }
-            else{
+            } else {
                 abstractBox.style.backgroundColor = backgroundColor;
             }
         }
     }
 }
+
 
 //Event handlers for overlay
 const closeBtn = document.querySelector("#close");
@@ -335,20 +334,20 @@ function toggleStatsOverlay(){
 
 //Function to pull data from local storage
 function pull(){
-    //Data: [numGames, wonGames, lostGames, oneGuessWin, twoGuessWin, threeGuessWin, fourGuessWin, fiveGuessWin, sixGuessWin, dateStamp, currentStreak, longestStreak];
     let data;
     if(localStorage.data){
         data = JSON.parse(localStorage.data);
     }
     else{
-        data = new Data(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, []);
+        data = new Data(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [], false);
+        localStorage.setItem("data", JSON.stringify(data));
     }
     return data;
 }
 
 //Data class for stats page
 class Data{
-    constructor(wonGames, lostGames, oneGuessWin, twoGuessWin, threeGuessWin, fourGuessWin, fiveGuessWin, sixGuessWin, dateStamp, currentStreak, longestStreak, previousGuesses){
+    constructor(wonGames, lostGames, oneGuessWin, twoGuessWin, threeGuessWin, fourGuessWin, fiveGuessWin, sixGuessWin, dateStamp, currentStreak, longestStreak, previousGuesses, wonToday){
         this.wonGames = wonGames;
         this.lostGames = lostGames;
         this.oneGuessWin = oneGuessWin;
@@ -361,6 +360,7 @@ class Data{
         this.currentStreak = currentStreak;
         this.longestStreak = longestStreak;
         this.previousGuesses = previousGuesses;
+        this.wonToday = wonToday;
     }
 }
 
@@ -388,7 +388,7 @@ const dateStamp = new Date(data.dateStamp);
 let gameOver = false;
 let isPractice = false;   //Used to prevent local storage manipulation
 
-//Datestamp will only be the same if the level is already completed
+//Datestamp will only be the same if the level is already attempted
 if(compareDates(currDate, dateStamp)){
     //Pull up version of overlay with different text, since user has already played
     const overlayTitle = document.querySelector("#overlay > h1");   
@@ -404,6 +404,11 @@ if(compareDates(currDate, dateStamp)){
         //After each word, call guess to color the boxes
         guess(currentWord, false);
     }
+}
+else{
+    data.wonToday = false;
+    data.previousGuesses = [];
+    localStorage.setItem("data", JSON.stringify(data));
 }
 
 function getAnswers(){
