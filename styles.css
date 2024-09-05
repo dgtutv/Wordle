@@ -388,6 +388,16 @@ button:hover{
     .specialKey{
         width: 12vw;
     }
+    #gameContainer{
+        margin-top: 8vh;
+    }
+    .overlay h1{
+        margin-top: 10vh;
+    }
+
+    .overlay{
+        height: 100%;
+    }
 }
 
 @media screen and (max-width: 300px) {

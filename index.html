@@ -10,6 +10,22 @@
         <script src="script.js" async defer></script>
 
     </head>
+    <script>
+        //Disable mobile touch from chatGPT
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevent double-tap to zoom on mobile devices
+            let lastTouchEnd = 0;
+        
+            document.addEventListener('touchend', function(event) {
+                const now = new Date().getTime();
+                const timeSinceLastTouch = now - lastTouchEnd;
+                if (timeSinceLastTouch < 500 && timeSinceLastTouch > 0) {
+                    event.preventDefault(); // Prevent zooming
+                }
+                lastTouchEnd = now;
+            }, false);
+        });
+    </script>
     <body>
         <div id="statsOverlay" class="overlay hidden">
             <h1>Game Info</h1>
