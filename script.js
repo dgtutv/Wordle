@@ -2,10 +2,14 @@
 - Add different messages for which guess the user wins on
 - Add share buttons
 - Make mobile compatible
-    - Fix double clicking
     - Home button stays pressed in after clicking on mobile
 - Practice mode can contribute to overlay shown, given the old guesses are available upon refresh
 */
+
+//Disable double click to zoom on mobile devices (stack overflow)
+document.addEventListener('dblclick', function(event) {
+    event.preventDefault();
+}, { passive: false });
 
 //Getting user input from on screen keyboard
 let keys = document.querySelectorAll(".keyboardBox");
