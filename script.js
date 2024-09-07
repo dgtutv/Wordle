@@ -3,7 +3,7 @@
 - Add share buttons
 - Make mobile compatible
     - Fix double clicking
-    - Adjust vertical styling
+    - Home button stays pressed in after clicking on mobile
 - Practice mode can contribute to overlay shown, given the old guesses are available upon refresh
 */
 
