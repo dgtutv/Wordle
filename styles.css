@@ -322,6 +322,7 @@ button:hover{
     align-items: center;
     gap: 12px;
     width: 400px;
+    margin: 0 25px;
 }
 
 .row{
@@ -360,8 +361,8 @@ button:hover{
     justify-content: space-between;
     align-items: flex-start;
     gap: 24px;
-    margin-bottom: 24px;
     font-weight: normal;
+    margin: 0 25px 25px 25px;
 }
 
 #statsContainer > div{
