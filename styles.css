@@ -398,6 +398,19 @@ button:hover{
 
     .overlay{
         height: 100%;
+        background-color: blue;
+    }
+    #graphContainer{
+        width: 280px;
+    }
+    #statsContainer{
+        width: 280px;
+    }
+    .number{
+        font-size: 2rem;
+    }
+    .label{
+        font-size: 1rem;
     }
 }
 
