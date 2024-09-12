@@ -104,6 +104,11 @@ body{
     font-size: 12px;
 }
 
+.currentBox{
+    border: 2px solid rgb(150, 150, 150);
+
+}
+
 svg{
     width: 20px;
     height: 20px;
@@ -257,8 +262,6 @@ button{
     fill: white;
     pointer-events: auto;
 }
-
-
 
 #close * {
     fill: inherit;

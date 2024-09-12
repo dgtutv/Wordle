@@ -21,10 +21,12 @@ keys.forEach((key) => {
         let id = event.target.id;
         if(id == "DELETE"){
             if(currentCol > 0){
+                boxes[currentBox].classList.remove("currentBox");
                 currentBox--;
                 currentCol--;
                 boxes[currentBox].innerHTML = "";
                 boxes[currentBox].classList.toggle("candidate");
+                boxes[currentBox].classList.add("currentBox");
             }
         }
         else if(id == "ENTER"){
@@ -32,14 +34,21 @@ keys.forEach((key) => {
                 currentCol = 0;
                 let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
                 //Current box has already been incremented 
-                guess(word, true);
+                if(guess(word, true)){
+                    boxes[currentBox].classList.add("currentBox");
+                }
             }
         }
         else if(currentCol < 5 && id.length == 1){
             boxes[currentBox].innerHTML = id;
             boxes[currentBox].classList.toggle("candidate");
+            boxes[currentBox].classList.remove("currentBox");
             currentBox++; 
             currentCol++;  
+            boxes[currentBox].classList.add("currentBox");
+        }
+        if(currentCol == 5){
+            boxes[currentBox].classList.remove("currentBox");
         }
     })
 });
@@ -53,8 +62,10 @@ document.addEventListener("keydown", (event) => {
     if (key.length !== 1) {
         if(key == "BACKSPACE"){
             if(currentCol > 0){
+                boxes[currentBox].classList.remove("currentBox");
                 currentBox--;
                 currentCol--;
+                boxes[currentBox].classList.add("currentBox");
                 boxes[currentBox].innerHTML = "";
                 boxes[currentBox].classList.toggle("candidate");
             }
@@ -64,7 +75,9 @@ document.addEventListener("keydown", (event) => {
                 currentCol = 0;
                 let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
                 //Current box has already been incremented 
-                guess(word, true);
+                if(guess(word, true)){
+                    boxes[currentBox].classList.add("currentBox");
+                }
             }
             else{
                 inform("Not enough letters");
@@ -76,19 +89,24 @@ document.addEventListener("keydown", (event) => {
         if(currentCol < 5){
             boxes[currentBox].innerHTML = key;
             boxes[currentBox].classList.toggle("candidate");
+            boxes[currentBox].classList.remove("currentBox");
             currentBox++;
             currentCol++;
+            boxes[currentBox].classList.add("currentBox");
         }
+    }
+    if(currentCol == 5){
+        boxes[currentBox].classList.remove("currentBox");
     }
 });
 
 //Function to handle guesses
 function guess(word, message){
     //Check if the word is in the guesses list
-    if(!guesses.includes(word.toLowerCase()) && !answers.includes(word.toLowerCase())){
+    if(!guesses.includes(word.toLowerCase()) && !answers.includes(word.toLowerCase())){     //Rejected answer case
         inform("Not in word list");
         currentCol = 5;
-        return;
+        return false;   //Do not display currentBox styling
     }
     let correctLetters = 0;
     for(let i=0; i<word.length; i++){
@@ -121,9 +139,14 @@ function guess(word, message){
 
     if(correctLetters == 5){        //Win Case
         endGame(true, answer, round, message);
+        return false;   //Do not display currentBox styling
     }
     else if(currentBox == 30){      //Loss case
         endGame(false, answer, round, message);
+        return false;    //Do not display currentbox styling
+    }
+    else{   //Regular, accepted guess case
+        return true;    //Display currentBox styling
     }
 }
 
@@ -319,6 +342,7 @@ function practiceMode(){
         keys[i].classList.remove("incorrectLetter");
     }
     answer = answers[Math.floor(Math.random()*answers.length)].toUpperCase();
+    boxes[0].classList.add("currentBox");
 }
 
 //Stats overlay functionality
@@ -438,6 +462,7 @@ else{
     data.wonToday = false;
     data.previousGuesses = [];
     localStorage.setItem("data", JSON.stringify(data));
+    boxes[currentBox].classList.add("currentBox")
 }
 
 function getAnswers(){
