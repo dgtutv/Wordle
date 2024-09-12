@@ -307,7 +307,7 @@ button:hover{
     background-color: rgb(82, 141, 77);
 }
 
-.overlay.hidden{
+.hidden{
     display: none;
 }
 
@@ -378,7 +378,6 @@ button:hover{
     font-size: 3rem;
 }
 
-
 @media screen and (max-width: 768px) {
     #keyboard{
         width: 100vw;
@@ -397,8 +396,10 @@ button:hover{
     }
 
     .overlay{
-        height: 100%;
+        height: 100vh;
+        overflow: auto;
     }
+
     #graphContainer{
         width: 280px;
     }
