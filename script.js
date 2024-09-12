@@ -249,6 +249,7 @@ function endGame(win, answer, round, message) {
     function contEnd() {
         const overlay = document.querySelector("#overlay");
         overlay.classList.toggle("hidden");
+        closeBtn.classList.toggle("hidden");
         keys.forEach((key) => {
             key.classList.toggle("hidden");
         });
@@ -278,6 +279,7 @@ const overlay = document.querySelector("#overlay");
 
 closeBtn.addEventListener('click', function(event){
     overlay.classList.toggle("hidden");
+    closeBtn.classList.toggle("hidden");
     keys.forEach((key) => {
         key.classList.toggle("hidden");
     });
@@ -285,6 +287,7 @@ closeBtn.addEventListener('click', function(event){
 
 statsBtn.addEventListener('click', function(event){
     overlay.classList.toggle("hidden");
+    closeBtn.classList.toggle("hidden");
     keys.forEach((key) => {
         key.classList.toggle("hidden");
     });
@@ -293,6 +296,7 @@ statsBtn.addEventListener('click', function(event){
 
 practiceBtn.addEventListener('click', function(event){
     overlay.classList.toggle("hidden");
+    closeBtn.classList.toggle("hidden");
     keys.forEach((key) => {
         key.classList.toggle("hidden");
     });
@@ -386,12 +390,14 @@ home.addEventListener('click', function(event){
     if(!statsOverlay.classList.contains("hidden")){  //Stats overlay is active
         statsOverlay.classList.toggle("hidden");
         overlay.classList.toggle("hidden");
+        closeBtn.classList.toggle("hidden");
         keys.forEach((key) => {
             key.classList.toggle("hidden");
         });
     }
     else if(overlay.classList.contains("hidden")){  //No overlay is active
         overlay.classList.toggle("hidden");
+        closeBtn.classList.toggle("hidden");
         keys.forEach((key) => {
             key.classList.toggle("hidden");
         });
@@ -409,6 +415,7 @@ const currDate = new Date();
 const dateStamp = new Date(data.dateStamp);
 let gameOver = false;
 let isPractice = false;   //Used to prevent local storage manipulation
+closeBtn.classList.toggle("hidden");
 
 //Datestamp will only be the same if the level is already attempted
 if(compareDates(currDate, dateStamp)){
