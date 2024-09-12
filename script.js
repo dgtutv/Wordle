@@ -1,9 +1,6 @@
 /* TODO:
 - Add different messages for which guess the user wins on
 - Add share buttons
-- Make mobile compatible
-    - Home button stays pressed in after clicking on mobile
-- Practice mode can contribute to overlay shown, given the old guesses are available upon refresh
 */
 
 //Disable double click to zoom on mobile devices (stack overflow)
@@ -133,7 +130,9 @@ function guess(word, message){
     let round = Math.ceil(currentBox / 5);
 
     //Write in the old guesses for if the user comes back, and save to the local storage
-    data.previousGuesses[round-1] = word;   
+    if(!data.wonToday){
+        data.previousGuesses[round-1] = word;   
+    }
     data.dateStamp = currDate;
     localStorage.setItem("data", JSON.stringify(data));
 
@@ -446,7 +445,6 @@ if(compareDates(currDate, dateStamp)){
     //Pull up version of overlay with different text, since user has already played
     const overlayTitle = document.querySelector("#overlay > h1");   
     overlayTitle.innerHTML = "Puzzle completed for the day!";
-
     //Display the old guesses in the boxes
     for(let i=0; i<data.previousGuesses.length; i++){
         let currentWord = data.previousGuesses[i];
