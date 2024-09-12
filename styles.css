@@ -51,9 +51,7 @@ body{
     -ms-user-select: none;
 }
 
-.keyboardBox:hover{
-    cursor: pointer;
-}
+
 
 .keyboardBox.correctLetter{
     background-color: rgb(181, 159, 58);
@@ -260,10 +258,7 @@ button{
     pointer-events: auto;
 }
 
-#close:hover{
-    fill: rgb(181, 58, 58);
-    cursor: pointer;
-}
+
 
 #close * {
     fill: inherit;
@@ -281,11 +276,6 @@ button{
     pointer-events: auto;
 }
 
-#home:hover{
-    fill: rgb(77, 141, 127);
-    cursor: pointer;
-}
-
 #home * {
     fill: inherit;
 }
@@ -294,18 +284,33 @@ button{
     pointer-events: auto;
 }
 
-button:hover{
-    cursor: pointer;
-    border-color: white;
+@media (hover: hover) {
+    #home:hover{
+        fill: rgb(77, 141, 127);
+        cursor: pointer;
+    }
+    button:hover{
+        cursor: pointer;
+        border-color: white;
+    }
+    #statsBtn:hover{
+        background-color: rgb(181, 159, 58);
+    }
+    
+    #practiceBtn:hover{
+        background-color: rgb(82, 141, 77);
+    }
+
+    .keyboardBox:hover{
+        cursor: pointer;
+    }
+
+    #close:hover{
+        fill: rgb(181, 58, 58);
+        cursor: pointer;
+    }
 }
 
-#statsBtn:hover{
-    background-color: rgb(181, 159, 58);
-}
-
-#practiceBtn:hover{
-    background-color: rgb(82, 141, 77);
-}
 
 .hidden{
     display: none;
