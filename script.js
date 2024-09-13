@@ -275,7 +275,7 @@ function endGame(win, answer, round, message) {
         keys.forEach((key) => {
             key.classList.toggle("hidden");
         });
-        let abstractBoxes = document.querySelectorAll(".abstractBox");
+        let abstractBoxes = document.querySelectorAll(".abstractBox.default");
         let letterBoxes = document.querySelectorAll(".letterBox");
 
         //Setup the abstract boxes on the overlay
@@ -293,14 +293,21 @@ function endGame(win, answer, round, message) {
 }
 
 
-//Event handlers for overlay
+//Event handlers for overlay & altOverlay
 const closeBtn = document.querySelector("#close");
 const statsBtn = document.querySelector("#statsBtn");
+const statsBtnAlt = document.querySelector("#statsBtn.alt")
 const practiceBtn = document.querySelector("#practiceBtn");
 const overlay = document.querySelector("#overlay");
+const altOverlay = document.querySelector("#altOverlay");
 
 closeBtn.addEventListener('click', function(event){
-    overlay.classList.toggle("hidden");
+    if(data.wonToday){
+        overlay.classList.toggle("hidden");
+    }
+    else{
+        altOverlay.classList.toggle("hidden");
+    }
     closeBtn.classList.toggle("hidden");
     keys.forEach((key) => {
         key.classList.toggle("hidden");
@@ -309,6 +316,15 @@ closeBtn.addEventListener('click', function(event){
 
 statsBtn.addEventListener('click', function(event){
     overlay.classList.toggle("hidden");
+    closeBtn.classList.toggle("hidden");
+    keys.forEach((key) => {
+        key.classList.toggle("hidden");
+    });
+    toggleStatsOverlay();    
+});
+
+statsBtnAlt.addEventListener('click', function(event){
+    altOverlay.classList.toggle("hidden");
     closeBtn.classList.toggle("hidden");
     keys.forEach((key) => {
         key.classList.toggle("hidden");
@@ -412,14 +428,24 @@ homeButton.addEventListener('click', function(event){
     const statsOverlay = document.querySelector("#statsOverlay");
     if(!statsOverlay.classList.contains("hidden")){  //Stats overlay is active
         statsOverlay.classList.toggle("hidden");
-        overlay.classList.toggle("hidden");
+        if(data.wonToday){
+            overlay.classList.toggle("hidden");
+        }
+        else{
+            altOverlay.classList.toggle("hidden");
+        }
         closeBtn.classList.toggle("hidden");
         keys.forEach((key) => {
             key.classList.toggle("hidden");
         });
     }
     else if(overlay.classList.contains("hidden")){  //No overlay is active
-        overlay.classList.toggle("hidden");
+        if(data.wonToday){
+            overlay.classList.toggle("hidden");
+        }
+        else{
+            altOverlay.classList.toggle("hidden");
+        }
         closeBtn.classList.toggle("hidden");
         keys.forEach((key) => {
             key.classList.toggle("hidden");

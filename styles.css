@@ -236,6 +236,7 @@ button{
     background-color: rgb(18, 18, 18);
     border: 2px solid rgb(58, 58, 58);
     color: white;
+    z-index: 9999999;
 }
 
 #abstractView{
