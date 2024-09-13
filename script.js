@@ -304,6 +304,7 @@ const altOverlay = document.querySelector("#altOverlay");
 closeBtn.addEventListener('click', function(event){
     if(data.wonToday){
         overlay.classList.toggle("hidden");
+        recreateGame();     //If won today without going to practice mode, this will fill remaining squares after answer
     }
     else{
         altOverlay.classList.toggle("hidden");
@@ -453,6 +454,25 @@ homeButton.addEventListener('click', function(event){
     }
 });
 
+//Recreates the original game for returning players and close button functionality
+function recreateGame(){
+    //Re-generate the word of the day to avoid practice mode related issues
+    answer = generateWord().toUpperCase();
+    //Pull up version of overlay with different text, since user has already played
+    const overlayTitle = document.querySelector("#overlay > h1");   
+    overlayTitle.innerHTML = "Puzzle completed for the day!";
+    //Display the old guesses in the boxes
+    for(let i=0; i<data.previousGuesses.length; i++){
+        let currentWord = data.previousGuesses[i];
+        for(let j=0; j<currentWord.length; j++){
+            boxes[currentBox].innerHTML = currentWord[j];   //Write the corresponding letter
+            currentBox++;
+        }
+        //After each word, call guess to color the boxes
+        guess(currentWord, false);
+    }
+}
+
 let currentBox = 0;
 let currentCol = 0;
 const boxes = document.querySelectorAll(".letterBox");
@@ -468,19 +488,7 @@ closeBtn.classList.toggle("hidden");
 
 //Datestamp will only be the same if the level is already attempted
 if(compareDates(currDate, dateStamp)){
-    //Pull up version of overlay with different text, since user has already played
-    const overlayTitle = document.querySelector("#overlay > h1");   
-    overlayTitle.innerHTML = "Puzzle completed for the day!";
-    //Display the old guesses in the boxes
-    for(let i=0; i<data.previousGuesses.length; i++){
-        let currentWord = data.previousGuesses[i];
-        for(let j=0; j<currentWord.length; j++){
-            boxes[currentBox].innerHTML = currentWord[j];   //Write the corresponding letter
-            currentBox++;
-        }
-        //After each word, call guess to color the boxes
-        guess(currentWord, false);
-    }
+    recreateGame();
 }
 else{
     data.wonToday = false;
