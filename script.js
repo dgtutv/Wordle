@@ -408,7 +408,7 @@ class Data{
 }
 
 const homeButton = document.querySelector("#home");
-home.addEventListener('click', function(event){
+homeButton.addEventListener('click', function(event){
     const statsOverlay = document.querySelector("#statsOverlay");
     if(!statsOverlay.classList.contains("hidden")){  //Stats overlay is active
         statsOverlay.classList.toggle("hidden");
