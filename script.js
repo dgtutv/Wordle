@@ -263,6 +263,7 @@ function endGame(win, answer, round, message) {
 
     //Inform user of result, update abstract boxes, bring up overlay
     gameOver = true;
+    completedToday = true;
 
     setTimeout(function () {
         contEnd();
@@ -302,7 +303,7 @@ const overlay = document.querySelector("#overlay");
 const altOverlay = document.querySelector("#altOverlay");
 
 closeBtn.addEventListener('click', function(event){
-    if(data.wonToday){
+    if(completedToday){
         overlay.classList.toggle("hidden");
     }
     else{
@@ -428,7 +429,7 @@ homeButton.addEventListener('click', function(event){
     const statsOverlay = document.querySelector("#statsOverlay");
     if(!statsOverlay.classList.contains("hidden")){  //Stats overlay is active
         statsOverlay.classList.toggle("hidden");
-        if(data.wonToday){
+        if(completedToday){
             overlay.classList.toggle("hidden");
         }
         else{
@@ -440,7 +441,7 @@ homeButton.addEventListener('click', function(event){
         });
     }
     else if(overlay.classList.contains("hidden")){  //No overlay is active
-        if(data.wonToday){
+        if(completedToday){
             overlay.classList.toggle("hidden");
         }
         else{
@@ -465,12 +466,16 @@ const dateStamp = new Date(data.dateStamp);
 let gameOver = false;
 let isPractice = false;   //Used to prevent local storage manipulation
 closeBtn.classList.toggle("hidden");
+let completedToday = false;
 
 //Datestamp will only be the same if the level is already attempted
 if(compareDates(currDate, dateStamp)){
+    completedToday = true;
+
     //Pull up version of overlay with different text, since user has already played
     const overlayTitle = document.querySelector("#overlay > h1");   
     overlayTitle.innerHTML = "Puzzle completed for the day!";
+
     //Display the old guesses in the boxes
     for(let i=0; i<data.previousGuesses.length; i++){
         let currentWord = data.previousGuesses[i];
