@@ -13,7 +13,9 @@ keys.forEach((key) => {
         let id = event.target.id;
         if(id == "DELETE"){
             if(currentCol > 0){
-                boxes[currentBox].classList.remove("currentBox");
+                if(currentBox < 30){
+                    boxes[currentBox].classList.remove("currentBox");
+                }
                 currentBox--;
                 currentCol--;
                 boxes[currentBox].innerHTML = "";
@@ -37,9 +39,11 @@ keys.forEach((key) => {
             boxes[currentBox].classList.remove("currentBox");
             currentBox++; 
             currentCol++;  
-            boxes[currentBox].classList.add("currentBox");
+            if(currentBox < 30){
+                boxes[currentBox].classList.add("currentBox");
+            }
         }
-        if(currentCol == 5){
+        if(currentCol == 5 && currentBox < 30){
             boxes[currentBox].classList.remove("currentBox");
         }
     })
@@ -54,7 +58,9 @@ document.addEventListener("keydown", (event) => {
     if (key.length !== 1) {
         if(key == "BACKSPACE"){
             if(currentCol > 0){
-                boxes[currentBox].classList.remove("currentBox");
+                if(currentBox < 30){
+                    boxes[currentBox].classList.remove("currentBox");
+                }
                 currentBox--;
                 currentCol--;
                 boxes[currentBox].classList.add("currentBox");
@@ -84,12 +90,15 @@ document.addEventListener("keydown", (event) => {
             boxes[currentBox].classList.remove("currentBox");
             currentBox++;
             currentCol++;
-            boxes[currentBox].classList.add("currentBox");
+            if(currentBox < 30){
+                boxes[currentBox].classList.add("currentBox");
+            }
         }
     }
-    if(currentCol == 5){
+    if(currentCol == 5 && currentBox < 30){
         boxes[currentBox].classList.remove("currentBox");
     }
+    
 });
 
 //Function to handle guesses
