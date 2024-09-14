@@ -1,8 +1,3 @@
-/* TODO:
-- Add different messages for which guess the user wins on
-- Add share buttons
-*/
-
 //Disable double click to zoom on mobile devices (stack overflow)
 document.addEventListener('dblclick', function(event) {
     event.preventDefault();
@@ -264,8 +259,6 @@ function endGame(win, answer, round, message) {
     //Inform user of result, update abstract boxes, bring up overlay
     gameOver = true;
     completedToday = true;
-
-
 
     setTimeout(function () {
         contEnd();
