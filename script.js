@@ -240,6 +240,7 @@ function endGame(win, answer, round, message) {
         else{
             data.currentStreak = 0;
         }
+        homeButton.classList.add("hidden");
     }
 
     localStorage.setItem("data", JSON.stringify(data));
@@ -256,6 +257,7 @@ function endGame(win, answer, round, message) {
         if(isPractice){
             return;
         }
+        homeButton.classList.remove("hidden");
         const overlay = document.querySelector("#overlay");
         overlay.classList.toggle("hidden");
         closeBtn.classList.toggle("hidden");
@@ -486,7 +488,6 @@ if(compareDates(currDate, dateStamp)){
     //Pull up version of overlay with different text, since user has already played
     const overlayTitle = document.querySelector("#overlay > h1");   
     overlayTitle.innerHTML = "Puzzle completed for the day!";
-
     recreateGame();
 }
 else{
