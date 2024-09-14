@@ -265,11 +265,16 @@ function endGame(win, answer, round, message) {
     gameOver = true;
     completedToday = true;
 
+
+
     setTimeout(function () {
         contEnd();
     }, 3000);
 
     function contEnd() {
+        if(isPractice){
+            return;
+        }
         const overlay = document.querySelector("#overlay");
         overlay.classList.toggle("hidden");
         closeBtn.classList.toggle("hidden");
@@ -279,17 +284,15 @@ function endGame(win, answer, round, message) {
         let abstractBoxes = document.querySelectorAll(".abstractBox.default");
         let letterBoxes = document.querySelectorAll(".letterBox");
 
-        //Setup the abstract boxes on the overlay, if not in practiceMode
-        if(!isPractice){
-            for (let i = 0; i < abstractBoxes.length; i++) {
-                let letterBox = letterBoxes[i];
-                let abstractBox = abstractBoxes[i];
-                let backgroundColor = window.getComputedStyle(letterBox).backgroundColor;
-                if (backgroundColor == "rgba(0, 0, 0, 0)") {
-                    abstractBox.style.backgroundColor = "rgb(58, 58, 58)";
-                } else {
-                    abstractBox.style.backgroundColor = backgroundColor;
-                }
+        //Setup the abstract boxes on the overlay
+        for (let i = 0; i < abstractBoxes.length; i++) {
+            let letterBox = letterBoxes[i];
+            let abstractBox = abstractBoxes[i];
+            let backgroundColor = window.getComputedStyle(letterBox).backgroundColor;
+            if (backgroundColor == "rgba(0, 0, 0, 0)") {
+                abstractBox.style.backgroundColor = "rgb(58, 58, 58)";
+            } else {
+                abstractBox.style.backgroundColor = backgroundColor;
             }
         }
     }
@@ -307,6 +310,9 @@ const altOverlay = document.querySelector("#altOverlay");
 closeBtn.addEventListener('click', function(event){
     if(completedToday){
         overlay.classList.toggle("hidden");
+        if(isPractice){     //If in practice mode, we should recreate the original game to show the user
+            recreateGame();
+        }
     }
     else{
         altOverlay.classList.toggle("hidden");
@@ -456,6 +462,28 @@ homeButton.addEventListener('click', function(event){
     }
 });
 
+function recreateGame(){
+    //Empty all the boxes
+    currentBox = 0;
+    currCol = 0;
+    answer = generateWord().toUpperCase();
+    for(let i=0; i<boxes.length; i++){
+        boxes[i].classList = "letterBox";
+        boxes[i].innerHTML = "";
+    }
+
+    //Display the old guesses in the boxes
+    for(let i=0; i<data.previousGuesses.length; i++){
+        let currentWord = data.previousGuesses[i];
+        for(let j=0; j<currentWord.length; j++){
+            boxes[currentBox].innerHTML = currentWord[j];   //Write the corresponding letter
+            currentBox++;
+        }
+        //After each word, call guess to color the boxes
+        guess(currentWord, false);
+    }
+}
+
 let currentBox = 0;
 let currentCol = 0;
 const boxes = document.querySelectorAll(".letterBox");
@@ -478,16 +506,7 @@ if(compareDates(currDate, dateStamp)){
     const overlayTitle = document.querySelector("#overlay > h1");   
     overlayTitle.innerHTML = "Puzzle completed for the day!";
 
-    //Display the old guesses in the boxes
-    for(let i=0; i<data.previousGuesses.length; i++){
-        let currentWord = data.previousGuesses[i];
-        for(let j=0; j<currentWord.length; j++){
-            boxes[currentBox].innerHTML = currentWord[j];   //Write the corresponding letter
-            currentBox++;
-        }
-        //After each word, call guess to color the boxes
-        guess(currentWord, false);
-    }
+    recreateGame();
 }
 else{
     data.wonToday = false;
