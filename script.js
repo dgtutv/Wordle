@@ -506,11 +506,24 @@ function generateResults(){
 
 //Share button functionality
 const shareButton = document.querySelector("#shareBtn");
-shareButton.addEventListener('click', function(event){
+shareButton.addEventListener('click', function(event) {
     const gameResults = generateResults();
-    console.log(gameResults);
-    const smsUrl = `sms:?body=${encodeURIComponent(gameResults)}`;
-    window.location.href = smsUrl;
+
+    //Ensure the Web Share API is supported
+    if(navigator.share){
+        const shareData = {
+            title: 'My Game Results',
+            text: gameResults
+        };
+
+        navigator.share(shareData)
+            .then(() => console.log('Thanks for sharing!'))
+            .catch((error) => console.log('Error sharing:', error));
+    } 
+    else{
+        //Fallback for browsers that don't support the Web Share API
+        alert('Web Share API not supported on this browser.');
+    }
 });
 
 let currentBox = 0;
