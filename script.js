@@ -477,20 +477,28 @@ function recreateGame(){
 function generateResults(){
     const today = new Date();
     const printDate = `${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}/${today.getFullYear()}`;
-    let firstLine = "Wordle Ultimate".concat(" ", printDate, " ", turnsToWin, "/6");
+    let firstLine = "Wordle Ultimate".concat(", ", printDate, ", ", turnsToWin, "/6");
     let abstractPrint = "";
+    let wholeGreenRow = false;
     for(let i=0; i<abstractBoxes.length; i++){
+        const backgroundColor = window.getComputedStyle(abstractBoxes[i]).backgroundColor;
         if(i % 5 == 0){
             abstractPrint = abstractPrint.concat("\n");
+            if(wholeGreenRow){
+                break;
+            }
         }
-        if(abstractBoxes[i].backgroundColor == "rgb(181, 159, 58)"){
+        if(backgroundColor == "rgb(181, 159, 58)"){
             abstractPrint = abstractPrint.concat("🟨");
+            wholeGreenRow = false;
         }
-        else if(abstractBoxes[i].backgroundColor == "rgb(82, 141, 77)"){
+        else if(backgroundColor == "rgb(82, 141, 77)"){
             abstractPrint = abstractPrint.concat("🟩");
+            wholeGreenRow = true;
         }
         else{
             abstractPrint = abstractPrint.concat("⬛");
+            wholeGreenRow = false;
         }
     }
     return(firstLine.concat(abstractPrint));
