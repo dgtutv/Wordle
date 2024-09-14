@@ -202,21 +202,27 @@ function endGame(win, answer, round, message) {
             switch (round) {
                 case 1:
                     data.oneGuessWin++;
+                    turnsToWin = "1";
                     break;
                 case 2:
                     data.twoGuessWin++;
+                    turnsToWin = "2";
                     break;
                 case 3:
                     data.threeGuessWin++;
+                    turnsToWin = "3";
                     break;
                 case 4:
                     data.fourGuessWin++;
+                    turnsToWin = "4";
                     break;
                 case 5:
                     data.fiveGuessWin++;
+                    turnsToWin = "5";
                     break;
                 default:
                     data.sixGuessWin++;
+                    turnsToWin = "6";
                     break;
             }
             data.wonToday = true;
@@ -264,7 +270,6 @@ function endGame(win, answer, round, message) {
         keys.forEach((key) => {
             key.classList.toggle("hidden");
         });
-        let abstractBoxes = document.querySelectorAll(".abstractBox.default");
         let letterBoxes = document.querySelectorAll(".letterBox");
 
         //Setup the abstract boxes on the overlay
@@ -289,6 +294,7 @@ const statsBtnAlt = document.querySelector("#statsBtn.alt")
 const practiceBtn = document.querySelector("#practiceBtn");
 const overlay = document.querySelector("#overlay");
 const altOverlay = document.querySelector("#altOverlay");
+let abstractBoxes = document.querySelectorAll(".abstractBox.default");
 
 closeBtn.addEventListener('click', function(event){
     if(completedToday){
@@ -467,6 +473,38 @@ function recreateGame(){
     }
 }
 
+//A function to generate the message sent by the share button
+function generateResults(){
+    const today = new Date();
+    const printDate = `${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}/${today.getFullYear()}`;
+    let firstLine = "Wordle Ultimate".concat(" ", printDate, " ", turnsToWin, "/6");
+    let abstractPrint = "";
+    for(let i=0; i<abstractBoxes.length; i++){
+        if(i % 5 == 0){
+            abstractPrint = abstractPrint.concat("\n");
+        }
+        if(abstractBoxes[i].backgroundColor == "rgb(181, 159, 58)"){
+            abstractPrint = abstractPrint.concat("🟨");
+        }
+        else if(abstractBoxes[i].backgroundColor == "rgb(82, 141, 77)"){
+            abstractPrint = abstractPrint.concat("🟩");
+        }
+        else{
+            abstractPrint = abstractPrint.concat("⬛");
+        }
+    }
+    return(firstLine.concat(abstractPrint));
+}
+
+//Share button functionality
+const shareButton = document.querySelector("#shareBtn");
+shareButton.addEventListener('click', function(event){
+    const gameResults = generateResults();
+    console.log(gameResults);
+    const smsUrl = `sms:?body=${encodeURIComponent(gameResults)}`;
+    window.location.href = smsUrl;
+});
+
 let currentBox = 0;
 let currentCol = 0;
 const boxes = document.querySelectorAll(".letterBox");
@@ -480,6 +518,7 @@ let gameOver = false;
 let isPractice = false;   //Used to prevent local storage manipulation
 closeBtn.classList.toggle("hidden");
 let completedToday = false;
+let turnsToWin = "X";
 
 //Datestamp will only be the same if the level is already attempted
 if(compareDates(currDate, dateStamp)){
