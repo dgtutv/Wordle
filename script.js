@@ -3,8 +3,18 @@ document.addEventListener('dblclick', function(event) {
     event.preventDefault();
 }, { passive: false });
 
+//Editing of words when a user clicks on the corresponding box
+const boxes = document.querySelectorAll(".letterBox");
+boxes.forEach((box) => {
+    box.addEventListener('click', function(event){
+        //Find index of the clicked box
+        //Highlight the clicked box
+        //Modify how currentCol and currentBox works, for correct keyboard behaviour
+    });
+});
+
 //Getting user input from on screen keyboard
-let keys = document.querySelectorAll(".keyboardBox");
+const keys = document.querySelectorAll(".keyboardBox");
 keys.forEach((key) => {
     key.addEventListener('click', function(event){
         if(gameOver){
@@ -279,7 +289,7 @@ function endGame(win, answer, round, message) {
         keys.forEach((key) => {
             key.classList.toggle("hidden");
         });
-        let letterBoxes = document.querySelectorAll(".letterBox");
+        const letterBoxes = document.querySelectorAll(".letterBox");
 
         //Setup the abstract boxes on the overlay
         for (let i = 0; i < abstractBoxes.length; i++) {
@@ -303,7 +313,7 @@ const statsBtnAlt = document.querySelector("#statsBtn.alt")
 const practiceBtn = document.querySelector("#practiceBtn");
 const overlay = document.querySelector("#overlay");
 const altOverlay = document.querySelector("#altOverlay");
-let abstractBoxes = document.querySelectorAll(".abstractBox.default");
+const abstractBoxes = document.querySelectorAll(".abstractBox.default");
 
 closeBtn.addEventListener('click', function(event){
     if(completedToday){
@@ -537,7 +547,6 @@ shareButton.addEventListener('click', function(event) {
 
 let currentBox = 0;
 let currentCol = 0;
-const boxes = document.querySelectorAll(".letterBox");
 const guesses = getGuesses();
 const answers = getAnswers();
 let answer = generateWord().toUpperCase();
