@@ -224,10 +224,11 @@ svg{
     display: flex;
     padding: 18px;
     padding-top: 0px;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 24px;
-    gap: 40px;
+    gap: 24px;
+    flex-wrap: wrap;
 }
 
 button{
@@ -299,7 +300,12 @@ button{
         cursor: pointer;
         border-color: white;
     }
+
     #statsBtn:hover{
+        background-color: rgb(181, 159, 58);
+    }
+
+    #shareBtn:hover{
         background-color: rgb(181, 159, 58);
     }
     
