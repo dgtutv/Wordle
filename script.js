@@ -279,15 +279,17 @@ function endGame(win, answer, round, message) {
         let abstractBoxes = document.querySelectorAll(".abstractBox.default");
         let letterBoxes = document.querySelectorAll(".letterBox");
 
-        //Setup the abstract boxes on the overlay
-        for (let i = 0; i < abstractBoxes.length; i++) {
-            let letterBox = letterBoxes[i];
-            let abstractBox = abstractBoxes[i];
-            let backgroundColor = window.getComputedStyle(letterBox).backgroundColor;
-            if (backgroundColor == "rgba(0, 0, 0, 0)") {
-                abstractBox.style.backgroundColor = "rgb(58, 58, 58)";
-            } else {
-                abstractBox.style.backgroundColor = backgroundColor;
+        //Setup the abstract boxes on the overlay, if not in practiceMode
+        if(!isPractice){
+            for (let i = 0; i < abstractBoxes.length; i++) {
+                let letterBox = letterBoxes[i];
+                let abstractBox = abstractBoxes[i];
+                let backgroundColor = window.getComputedStyle(letterBox).backgroundColor;
+                if (backgroundColor == "rgba(0, 0, 0, 0)") {
+                    abstractBox.style.backgroundColor = "rgb(58, 58, 58)";
+                } else {
+                    abstractBox.style.backgroundColor = backgroundColor;
+                }
             }
         }
     }
