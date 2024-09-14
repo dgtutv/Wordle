@@ -231,27 +231,15 @@ function endGame(win, answer, round, message) {
         }
     }
 
-    //Check date and update streaks accordingly
+    //Update streaks
     if(!isPractice) {
-        const prevDate = new Date(currDate);
-        prevDate.setDate(currDate.getDate() - 1);
-
-        let prevDateStamp;
-        if(data.dateStamp == 0) {    //Date stamp has not been set
-            prevDateStamp = prevDate;
-        } 
-        else{
-            prevDateStamp = new Date(data.dateStamp);   //create a date from the string
-        }
-
-        if(compareDates(prevDateStamp, prevDate)) {
+        if(win){
             data.currentStreak++;
-            data.longestStreak = Math.max(data.currentStreak, data.longestStreak);
-        } 
+            data.maxStreak = Math.max(data.currentStreak, data.maxStreak);
+        }
         else{
             data.currentStreak = 0;
         }
-        data.dateStamp = currDate;
     }
 
     localStorage.setItem("data", JSON.stringify(data));
