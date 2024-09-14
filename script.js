@@ -535,6 +535,10 @@ if(compareDates(currDate, dateStamp)){
     //Pull up version of overlay with different text, since user has already played
     const overlayTitle = document.querySelector("#overlay > h1");   
     overlayTitle.innerHTML = "Puzzle completed for the day!";
+
+    //Update turnsToWin to be correct value
+    turnsToWin = data.previousGuesses.length;
+
     recreateGame();
 }
 else{
