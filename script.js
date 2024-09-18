@@ -503,21 +503,18 @@ function generateResults(){
         const backgroundColor = window.getComputedStyle(abstractBoxes[i]).backgroundColor;
         if(i % 5 == 0){
             abstractPrint = abstractPrint.concat("\n");
-            if(wholeGreenRow){
+            if(Math.floor(i/5) == turnsToWin){
                 break;
             }
         }
         if(backgroundColor == "rgb(181, 159, 58)"){
             abstractPrint = abstractPrint.concat("🟨");
-            wholeGreenRow = false;
         }
         else if(backgroundColor == "rgb(82, 141, 77)"){
             abstractPrint = abstractPrint.concat("🟩");
-            wholeGreenRow = true;
         }
         else{
             abstractPrint = abstractPrint.concat("⬛");
-            wholeGreenRow = false;
         }
     }
     return(firstLine.concat(abstractPrint));
