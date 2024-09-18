@@ -518,7 +518,7 @@ function generateResults(){
             abstractPrint = abstractPrint.concat("⬛");
         }
     }
-    return(firstLine.concat(abstractPrint));
+    return(firstLine.concat(abstractPrint, "\n", "https://dgtutv.github.io/Wordle/"));
 }
 
 //Share button functionality
