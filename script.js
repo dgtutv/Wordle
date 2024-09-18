@@ -196,7 +196,7 @@ function inform(message){
 
     setTimeout(function() {
         informEnd(messageBox);
-    }, 1500);
+    }, 2800);
 
     function informEnd(messageBox){
         messageBox.remove();
@@ -277,7 +277,7 @@ function endGame(win, answer, round, message) {
 
     setTimeout(function () {
         contEnd();
-    }, 3000);
+    }, 3500);
 
     function contEnd() {
         if(isPractice){
