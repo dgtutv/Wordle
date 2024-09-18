@@ -144,7 +144,7 @@ function guess(word, message){
     let round = Math.ceil(currentBox / 5);
 
     //Write in the old guesses for if the user comes back, and save to the local storage
-    if(!data.wonToday){
+    if(!data.completedToday){
         data.previousGuesses[round-1] = word;   
     }
     data.dateStamp = currDate;
@@ -216,7 +216,7 @@ function endGame(win, answer, round, message) {
         if(message){
             inform("You win!");
         }
-        if(!data.wonToday) {       //Update stats only if not already won today
+        if(!data.completedToday) {       //Update stats only if not already won today
             data.wonGames++;
             switch (round) {
                 case 1:
@@ -245,6 +245,7 @@ function endGame(win, answer, round, message) {
                     break;
             }
             data.wonToday = true;
+            data.completedToday = true;
         }
     } 
     else{
