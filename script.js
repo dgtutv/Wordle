@@ -7,8 +7,22 @@ document.addEventListener('dblclick', function(event) {
 const boxes = document.querySelectorAll(".letterBox");
 boxes.forEach((box) => {
     box.addEventListener('click', function(event){
-        //Find index of the clicked box
-        //Highlight the clicked box
+        //Ensure that the box is on the currentLine
+        const currentLine = Math.floor(currentBox / 5);
+        const boxLine = Math.floor(box.id / 5);
+        if(currentLine != boxLine){
+            return;
+        }
+
+        //Remove the highlighting from the previously clicked box
+        for(let i=0; i<boxes.length; i++){
+            if(boxes[i].classList.contains("currentBox")){
+                boxes[i].classList.remove("currentBox");
+            }
+        }
+
+        const index = box.id;
+        box.classList.add("currentBox")     //Highlight the clicked box
         //Modify how currentCol and currentBox works, for correct keyboard behaviour
     });
 });
