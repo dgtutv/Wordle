@@ -8,7 +8,11 @@ const boxes = document.querySelectorAll(".letterBox");
 boxes.forEach((box) => {
     box.addEventListener('click', function(event){
         //Ensure that the box is on the currentLine
-        const currentLine = Math.floor(currentBox / 5);
+        let currentLine = Math.floor(currentBox / 5);
+        if(currentCol == 5){            //When the word has been fully typed, but not submitted, prevent the next row from being clickable
+            currentLine--;
+        }
+        
         const boxLine = Math.floor(box.id / 5);
         if(currentLine != boxLine){
             return;
@@ -20,9 +24,9 @@ boxes.forEach((box) => {
                 boxes[i].classList.remove("currentBox");
             }
         }
-
         const index = box.id;
         box.classList.add("currentBox")     //Highlight the clicked box
+
         //Modify how currentCol and currentBox works, for correct keyboard behaviour
     });
 });
