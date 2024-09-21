@@ -17,7 +17,7 @@ boxes.forEach((box) => {
         if(currentLine != boxLine){
             return;
         }
-
+r
         //Remove the highlighting from the previously clicked box
         for(let i=0; i<boxes.length; i++){
             if(boxes[i].classList.contains("currentBox")){
