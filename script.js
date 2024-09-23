@@ -9,6 +9,7 @@ boxes.forEach((box) => {
     box.addEventListener('click', function(event){
         //Ensure that the box is on the currentLine
         let currentLine = Math.floor(currentBox / 5);
+
         if(currentCol == 5){            //When the word has been fully typed, but not submitted, prevent the next row from being clickable
             currentLine--;  //TODO: Change to trackable variable, only working line should be selectable
         }
@@ -26,8 +27,9 @@ boxes.forEach((box) => {
         }
         const index = box.id;
         box.classList.add("currentBox")     //Highlight the clicked box
+        currentBox = index;
+        currentCol = index % 5;
 
-        //TODO: Set currentBox and currentCol to this box
     });
 });
 
