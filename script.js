@@ -53,7 +53,7 @@ keys.forEach((key) => {
                 currentBox--;
                 currentCol--;
                 boxes[currentBox].innerHTML = "";
-                boxes[currentBox].classList.toggle("candidate");
+                boxes[currentBox].classList.remove("candidate");
                 boxes[currentBox].classList.add("currentBox");
             }
         }
@@ -69,7 +69,7 @@ keys.forEach((key) => {
         }
         else if(currentCol < 5 && id.length == 1){
             boxes[currentBox].innerHTML = id;
-            boxes[currentBox].classList.toggle("candidate");
+            boxes[currentBox].classList.add("candidate");
             boxes[currentBox].classList.remove("currentBox");
             currentBox++; 
             currentCol++;  
@@ -99,7 +99,7 @@ document.addEventListener("keydown", (event) => {
                 currentCol--;
                 boxes[currentBox].classList.add("currentBox");
                 boxes[currentBox].innerHTML = "";
-                boxes[currentBox].classList.toggle("candidate");
+                boxes[currentBox].classList.remove("candidate");
             }
         }
         else if(key == "ENTER"){
@@ -120,7 +120,7 @@ document.addEventListener("keydown", (event) => {
     if(key >= 'A' && key <= 'Z'){
         if(currentCol < 5){
             boxes[currentBox].innerHTML = key;
-            boxes[currentBox].classList.toggle("candidate");
+            boxes[currentBox].classList.add("candidate");
             boxes[currentBox].classList.remove("currentBox");
             currentBox++;
             currentCol++;
