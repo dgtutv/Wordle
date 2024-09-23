@@ -7,6 +7,10 @@ document.addEventListener('dblclick', function(event) {
 const boxes = document.querySelectorAll(".letterBox");
 boxes.forEach((box) => {
     box.addEventListener('click', function(event){
+        if(gameOver){   //No interactability with the finished game
+            return;
+        }
+
         //Ensure that the box is on the currentLine
         let currentLine = Math.floor(currentBox / 5);
 
@@ -29,12 +33,11 @@ boxes.forEach((box) => {
         box.classList.add("currentBox")     //Highlight the clicked box
         currentBox = index;
         currentCol = index % 5;
-
     });
 });
 
 //Getting user input from on screen keyboard
-//TODO: find the highlighted box, act on that. If not available, find the next available on the line
+//TODO: Delete should delete the currently highlighted box, and remove the candidate class from the box
 const keys = document.querySelectorAll(".keyboardBox");
 keys.forEach((key) => {
     key.addEventListener('click', function(event){
