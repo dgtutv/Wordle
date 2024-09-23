@@ -10,14 +10,14 @@ boxes.forEach((box) => {
         //Ensure that the box is on the currentLine
         let currentLine = Math.floor(currentBox / 5);
         if(currentCol == 5){            //When the word has been fully typed, but not submitted, prevent the next row from being clickable
-            currentLine--;
+            currentLine--;  //TODO: Change to trackable variable, only working line should be selectable
         }
         
         const boxLine = Math.floor(box.id / 5);
         if(currentLine != boxLine){
             return;
         }
-r
+
         //Remove the highlighting from the previously clicked box
         for(let i=0; i<boxes.length; i++){
             if(boxes[i].classList.contains("currentBox")){
@@ -27,11 +27,12 @@ r
         const index = box.id;
         box.classList.add("currentBox")     //Highlight the clicked box
 
-        //Modify how currentCol and currentBox works, for correct keyboard behaviour
+        //TODO: Set currentBox and currentCol to this box
     });
 });
 
 //Getting user input from on screen keyboard
+//TODO: find the highlighted box, act on that. If not available, find the next available on the line
 const keys = document.querySelectorAll(".keyboardBox");
 keys.forEach((key) => {
     key.addEventListener('click', function(event){
