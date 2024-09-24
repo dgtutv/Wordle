@@ -15,7 +15,7 @@ boxes.forEach((box) => {
         let currentLine = Math.floor(currentBox / 5);
 
         if(currentCol == 5){            //When the word has been fully typed, but not submitted, prevent the next row from being clickable
-            currentLine--;  //TODO: Change to trackable variable, only working line should be selectable
+            currentLine--;  
         }
         
         const boxLine = Math.floor(box.id / 5);
@@ -37,7 +37,7 @@ boxes.forEach((box) => {
 });
 
 //Getting user input from on screen keyboard
-//TODO: Delete should delete the currently highlighted box, and remove the candidate class from the box
+//TODO: Delete should delete the currently highlighted box
 const keys = document.querySelectorAll(".keyboardBox");
 keys.forEach((key) => {
     key.addEventListener('click', function(event){
@@ -50,9 +50,19 @@ keys.forEach((key) => {
                 if(currentBox < 30){
                     boxes[currentBox].classList.remove("currentBox");
                 }
-                currentBox--;
-                currentCol--;
-                boxes[currentBox].innerHTML = "";
+
+                //If the current box is empty, delete the letter before 
+                if(boxes[currentBox].innerHTML === ""){
+                    currentBox--;
+                    currentCol--;
+                    boxes[currentBox].innerHTML = "";
+                }
+                //Otherwise, delete the box highlighted
+                else{
+                    boxes[currentBox].innerHTML = "";
+                    currentBox--;
+                    currentCol--;
+                }
                 boxes[currentBox].classList.remove("candidate");
                 boxes[currentBox].classList.add("currentBox");
             }
@@ -95,11 +105,21 @@ document.addEventListener("keydown", (event) => {
                 if(currentBox < 30){
                     boxes[currentBox].classList.remove("currentBox");
                 }
-                currentBox--;
-                currentCol--;
-                boxes[currentBox].classList.add("currentBox");
-                boxes[currentBox].innerHTML = "";
+
+                //If the current box is empty, delete the letter before 
+                if(boxes[currentBox].innerHTML === ""){
+                    currentBox--;
+                    currentCol--;
+                    boxes[currentBox].innerHTML = "";
+                }
+                //Otherwise, delete the box highlighted
+                else{
+                    boxes[currentBox].innerHTML = "";
+                    currentBox--;
+                    currentCol--;
+                }
                 boxes[currentBox].classList.remove("candidate");
+                boxes[currentBox].classList.add("currentBox");
             }
         }
         else if(key == "ENTER"){
