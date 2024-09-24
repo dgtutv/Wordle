@@ -37,7 +37,6 @@ boxes.forEach((box) => {
 });
 
 //Getting user input from on screen keyboard
-//TODO: Delete should delete the currently highlighted box
 const keys = document.querySelectorAll(".keyboardBox");
 keys.forEach((key) => {
     key.addEventListener('click', function(event){
@@ -68,13 +67,23 @@ keys.forEach((key) => {
             }
         }
         else if(id == "ENTER"){
-            if(currentCol == 5){
-                currentCol = 0;
-                let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
-                //Current box has already been incremented 
-                if(guess(word, true)){
-                    boxes[currentBox].classList.add("currentBox");
+            //Check if whole line is filled in
+            for(let i=currentCol; i>0; i--){
+                currentBox--;
+            }
+            let firstLetter = currentBox;
+            for(let i=0; i<5; i++){
+                if(boxes[currentBox].innerHTML == ""){
+                    return;
                 }
+                currentBox++;
+            }
+            currentCol = 0;
+            let word = boxes[firstLetter].innerHTML + boxes[firstLetter+1].innerHTML + boxes[firstLetter+2].innerHTML + boxes[firstLetter+3].innerHTML + boxes[firstLetter+4].innerHTML;
+            console.log(word);
+            //Current box has already been incremented 
+            if(guess(word, true)){
+                boxes[currentBox].classList.add("currentBox");
             }
         }
         else if(currentCol < 5 && id.length == 1){
@@ -130,16 +139,23 @@ document.addEventListener("keydown", (event) => {
                 boxes[currentBox].classList.add("currentBox");
         }
         else if(key == "ENTER"){
-            if(currentCol == 5){
-                currentCol = 0;
-                let word = boxes[currentBox-5].innerHTML + boxes[currentBox-4].innerHTML + boxes[currentBox-3].innerHTML + boxes[currentBox-2].innerHTML + boxes[currentBox-1].innerHTML;
-                //Current box has already been incremented 
-                if(guess(word, true)){
-                    boxes[currentBox].classList.add("currentBox");
-                }
+            //Check if whole line is filled in
+            for(let i=currentCol; i>0; i--){
+                currentBox--;
             }
-            else{
-                inform("Not enough letters");
+            let firstLetter = currentBox;
+            for(let i=0; i<5; i++){
+                if(boxes[currentBox].innerHTML == ""){
+                    return;
+                }
+                currentBox++;
+            }
+            currentCol = 0;
+            let word = boxes[firstLetter].innerHTML + boxes[firstLetter+1].innerHTML + boxes[firstLetter+2].innerHTML + boxes[firstLetter+3].innerHTML + boxes[firstLetter+4].innerHTML;
+            console.log(word);
+            //Current box has already been incremented 
+            if(guess(word, true)){
+                boxes[currentBox].classList.add("currentBox");
             }
         }
         else if(key == "ARROWLEFT"){
