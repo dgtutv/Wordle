@@ -78,9 +78,12 @@ keys.forEach((key) => {
                 }
                 currentBox++;
             }
+            //Remove currentBox class from all letters in the row
+            for(let i=0; i<5; i++){
+                boxes[firstLetter+i].classList.remove("currentBox");
+            }
             currentCol = 0;
             let word = boxes[firstLetter].innerHTML + boxes[firstLetter+1].innerHTML + boxes[firstLetter+2].innerHTML + boxes[firstLetter+3].innerHTML + boxes[firstLetter+4].innerHTML;
-            console.log(word);
             //Current box has already been incremented 
             if(guess(word, true)){
                 boxes[currentBox].classList.add("currentBox");
@@ -150,9 +153,12 @@ document.addEventListener("keydown", (event) => {
                 }
                 currentBox++;
             }
+            //Remove currentBox class from all letters in the row
+            for(let i=0; i<5; i++){
+                boxes[firstLetter+i].classList.remove("currentBox");
+            }
             currentCol = 0;
             let word = boxes[firstLetter].innerHTML + boxes[firstLetter+1].innerHTML + boxes[firstLetter+2].innerHTML + boxes[firstLetter+3].innerHTML + boxes[firstLetter+4].innerHTML;
-            console.log(word);
             //Current box has already been incremented 
             if(guess(word, true)){
                 boxes[currentBox].classList.add("currentBox");
