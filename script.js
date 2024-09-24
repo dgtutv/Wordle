@@ -101,26 +101,33 @@ document.addEventListener("keydown", (event) => {
     const key = event.key.toUpperCase();
     if (key.length !== 1) {
         if(key == "BACKSPACE"){
-            if(currentCol > 0){
                 if(currentBox < 30){
                     boxes[currentBox].classList.remove("currentBox");
                 }
 
                 //If the current box is empty, delete the letter before 
                 if(boxes[currentBox].innerHTML === ""){
-                    currentBox--;
-                    currentCol--;
-                    boxes[currentBox].innerHTML = "";
+                    if(currentCol > 0){
+                        currentBox--;
+                        currentCol--;
+                        boxes[currentBox].innerHTML = "";
+                        boxes[currentBox].classList.remove("candidate");
+                    }
                 }
                 //Otherwise, delete the box highlighted
                 else{
-                    boxes[currentBox].innerHTML = "";
-                    currentBox--;
-                    currentCol--;
+                    if(currentCol > 0){
+                        boxes[currentBox].innerHTML = "";
+                        boxes[currentBox].classList.remove("candidate");
+                        currentBox--;
+                        currentCol--;
+                    }
+                    else{
+                        boxes[currentBox].innerHTML = "";
+                        boxes[currentBox].classList.remove("candidate"); 
+                    }
                 }
-                boxes[currentBox].classList.remove("candidate");
                 boxes[currentBox].classList.add("currentBox");
-            }
         }
         else if(key == "ENTER"){
             if(currentCol == 5){
@@ -133,6 +140,22 @@ document.addEventListener("keydown", (event) => {
             }
             else{
                 inform("Not enough letters");
+            }
+        }
+        else if(key == "ARROWLEFT"){
+            if(currentCol > 0){
+                boxes[currentBox].classList.remove("currentBox");
+                currentBox--;
+                currentCol--;
+                boxes[currentBox].classList.add("currentBox");
+            }
+        }
+        else if(key == "ARROWRIGHT"){
+            if(currentCol < 4){
+                boxes[currentBox].classList.remove("currentBox");
+                currentBox++;
+                currentCol++;
+                boxes[currentBox].classList.add("currentBox");
             }
         }
         return;
