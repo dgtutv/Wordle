@@ -105,8 +105,7 @@ body{
 }
 
 .currentBox{
-    border: 2px solid rgb(150, 150, 150);
-
+    border: 2px solid rgb(150, 150, 150) !important;
 }
 
 svg{

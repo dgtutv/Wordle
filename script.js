@@ -7,13 +7,37 @@ document.addEventListener('dblclick', function(event) {
 const boxes = document.querySelectorAll(".letterBox");
 boxes.forEach((box) => {
     box.addEventListener('click', function(event){
-        //Find index of the clicked box
-        //Highlight the clicked box
-        //Modify how currentCol and currentBox works, for correct keyboard behaviour
+        if(gameOver){   //No interactability with the finished game
+            return;
+        }
+
+        //Ensure that the box is on the currentLine
+        let currentLine = Math.floor(currentBox / 5);
+
+        if(currentCol == 5){            //When the word has been fully typed, but not submitted, prevent the next row from being clickable
+            currentLine--;  
+        }
+        
+        const boxLine = Math.floor(box.id / 5);
+        if(currentLine != boxLine){
+            return;
+        }
+
+        //Remove the highlighting from the previously clicked box
+        for(let i=0; i<boxes.length; i++){
+            if(boxes[i].classList.contains("currentBox")){
+                boxes[i].classList.remove("currentBox");
+            }
+        }
+        const index = box.id;
+        box.classList.add("currentBox")     //Highlight the clicked box
+        currentBox = index;
+        currentCol = index % 5;
     });
 });
 
 //Getting user input from on screen keyboard
+//TODO: Delete should delete the currently highlighted box
 const keys = document.querySelectorAll(".keyboardBox");
 keys.forEach((key) => {
     key.addEventListener('click', function(event){
@@ -26,10 +50,20 @@ keys.forEach((key) => {
                 if(currentBox < 30){
                     boxes[currentBox].classList.remove("currentBox");
                 }
-                currentBox--;
-                currentCol--;
-                boxes[currentBox].innerHTML = "";
-                boxes[currentBox].classList.toggle("candidate");
+
+                //If the current box is empty, delete the letter before 
+                if(boxes[currentBox].innerHTML === ""){
+                    currentBox--;
+                    currentCol--;
+                    boxes[currentBox].innerHTML = "";
+                }
+                //Otherwise, delete the box highlighted
+                else{
+                    boxes[currentBox].innerHTML = "";
+                    currentBox--;
+                    currentCol--;
+                }
+                boxes[currentBox].classList.remove("candidate");
                 boxes[currentBox].classList.add("currentBox");
             }
         }
@@ -45,7 +79,7 @@ keys.forEach((key) => {
         }
         else if(currentCol < 5 && id.length == 1){
             boxes[currentBox].innerHTML = id;
-            boxes[currentBox].classList.toggle("candidate");
+            boxes[currentBox].classList.add("candidate");
             boxes[currentBox].classList.remove("currentBox");
             currentBox++; 
             currentCol++;  
@@ -67,16 +101,33 @@ document.addEventListener("keydown", (event) => {
     const key = event.key.toUpperCase();
     if (key.length !== 1) {
         if(key == "BACKSPACE"){
-            if(currentCol > 0){
                 if(currentBox < 30){
                     boxes[currentBox].classList.remove("currentBox");
                 }
-                currentBox--;
-                currentCol--;
+
+                //If the current box is empty, delete the letter before 
+                if(boxes[currentBox].innerHTML === ""){
+                    if(currentCol > 0){
+                        currentBox--;
+                        currentCol--;
+                        boxes[currentBox].innerHTML = "";
+                        boxes[currentBox].classList.remove("candidate");
+                    }
+                }
+                //Otherwise, delete the box highlighted
+                else{
+                    if(currentCol > 0){
+                        boxes[currentBox].innerHTML = "";
+                        boxes[currentBox].classList.remove("candidate");
+                        currentBox--;
+                        currentCol--;
+                    }
+                    else{
+                        boxes[currentBox].innerHTML = "";
+                        boxes[currentBox].classList.remove("candidate"); 
+                    }
+                }
                 boxes[currentBox].classList.add("currentBox");
-                boxes[currentBox].innerHTML = "";
-                boxes[currentBox].classList.toggle("candidate");
-            }
         }
         else if(key == "ENTER"){
             if(currentCol == 5){
@@ -91,12 +142,28 @@ document.addEventListener("keydown", (event) => {
                 inform("Not enough letters");
             }
         }
+        else if(key == "ARROWLEFT"){
+            if(currentCol > 0){
+                boxes[currentBox].classList.remove("currentBox");
+                currentBox--;
+                currentCol--;
+                boxes[currentBox].classList.add("currentBox");
+            }
+        }
+        else if(key == "ARROWRIGHT"){
+            if(currentCol < 4){
+                boxes[currentBox].classList.remove("currentBox");
+                currentBox++;
+                currentCol++;
+                boxes[currentBox].classList.add("currentBox");
+            }
+        }
         return;
     }
     if(key >= 'A' && key <= 'Z'){
         if(currentCol < 5){
             boxes[currentBox].innerHTML = key;
-            boxes[currentBox].classList.toggle("candidate");
+            boxes[currentBox].classList.add("candidate");
             boxes[currentBox].classList.remove("currentBox");
             currentBox++;
             currentCol++;
