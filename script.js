@@ -59,8 +59,6 @@ keys.forEach((key) => {
                 //Otherwise, delete the box highlighted
                 else{
                     boxes[currentBox].innerHTML = "";
-                    currentBox--;
-                    currentCol--;
                 }
                 boxes[currentBox].classList.remove("candidate");
                 boxes[currentBox].classList.add("currentBox");
@@ -131,8 +129,6 @@ document.addEventListener("keydown", (event) => {
                     if(currentCol > 0){
                         boxes[currentBox].innerHTML = "";
                         boxes[currentBox].classList.remove("candidate");
-                        currentBox--;
-                        currentCol--;
                     }
                     else{
                         boxes[currentBox].innerHTML = "";
