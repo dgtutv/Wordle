@@ -310,27 +310,21 @@ function endGame(win, answer, round, message) {
             switch (round) {
                 case 1:
                     data.oneGuessWin++;
-                    turnsToWin = "1";
                     break;
                 case 2:
                     data.twoGuessWin++;
-                    turnsToWin = "2";
                     break;
                 case 3:
                     data.threeGuessWin++;
-                    turnsToWin = "3";
                     break;
                 case 4:
                     data.fourGuessWin++;
-                    turnsToWin = "4";
                     break;
                 case 5:
                     data.fiveGuessWin++;
-                    turnsToWin = "5";
                     break;
                 default:
                     data.sixGuessWin++;
-                    turnsToWin = "6";
                     break;
             }
             data.wonToday = true;
