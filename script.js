@@ -358,11 +358,10 @@ function endGame(win, answer, round, message) {
         homeButton.classList.add("hidden");
     }
 
-    localStorage.setItem("data", JSON.stringify(data));
-
     //Inform user of result, update abstract boxes, bring up overlay
     gameOver = true;
-    completedToday = true;
+    data.completedToday = true;
+    localStorage.setItem("data", JSON.stringify(data));
 
     setTimeout(function () {
         contEnd();
@@ -406,7 +405,7 @@ const altOverlay = document.querySelector("#altOverlay");
 const abstractBoxes = document.querySelectorAll(".abstractBox.default");
 
 closeBtn.addEventListener('click', function(event){
-    if(completedToday){
+    if(data.completedToday){
         overlay.classList.toggle("hidden");
         if(isPractice){     //If in practice mode, we should recreate the original game to show the user
             recreateGame();
@@ -505,7 +504,7 @@ function pull(){
         data = JSON.parse(localStorage.data);
     }
     else{
-        data = new Data(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [], false);
+        data = new Data();
         localStorage.setItem("data", JSON.stringify(data));
     }
     return data;
@@ -513,20 +512,21 @@ function pull(){
 
 //Data class for stats page
 class Data{
-    constructor(wonGames, lostGames, oneGuessWin, twoGuessWin, threeGuessWin, fourGuessWin, fiveGuessWin, sixGuessWin, dateStamp, currentStreak, longestStreak, previousGuesses, wonToday){
-        this.wonGames = wonGames;
-        this.lostGames = lostGames;
-        this.oneGuessWin = oneGuessWin;
-        this.twoGuessWin = twoGuessWin;
-        this.threeGuessWin = threeGuessWin;
-        this.fourGuessWin = fourGuessWin;
-        this.fiveGuessWin = fiveGuessWin;
-        this.sixGuessWin = sixGuessWin;
+    constructor(){
+        this.wonGames = 0;
+        this.lostGames = 0;
+        this.oneGuessWin = 0;
+        this.twoGuessWin = 0;
+        this.threeGuessWin = 0;
+        this.fourGuessWin = 0;
+        this.fiveGuessWin = 0;
+        this.sixGuessWin = 0;
         this.dateStamp = dateStamp;
-        this.currentStreak = currentStreak;
-        this.longestStreak = longestStreak;
-        this.previousGuesses = previousGuesses;
-        this.wonToday = wonToday;
+        this.currentStreak = 0;
+        this.longestStreak = 0;
+        this.previousGuesses = [];
+        this.wonToday = false;
+        this.completedToday = false
     }
 }
 
@@ -535,7 +535,7 @@ homeButton.addEventListener('click', function(event){
     const statsOverlay = document.querySelector("#statsOverlay");
     if(!statsOverlay.classList.contains("hidden")){  //Stats overlay is active
         statsOverlay.classList.toggle("hidden");
-        if(completedToday){
+        if(data.completedToday){
             overlay.classList.toggle("hidden");
         }
         else{
@@ -547,7 +547,7 @@ homeButton.addEventListener('click', function(event){
         });
     }
     else if(overlay.classList.contains("hidden")){  //No overlay is active
-        if(completedToday){
+        if(data.completedToday){
             overlay.classList.toggle("hidden");
         }
         else{
@@ -584,11 +584,12 @@ function recreateGame(){
 
 //A function to generate the message sent by the share button
 function generateResults(){
+    let turnsToWin = data.previousGuesses.length;
     const today = new Date();
     const printDate = `${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}/${today.getFullYear()}`;
     let firstLine = "Wordle Ultimate".concat(", ", printDate, ", ", turnsToWin, "/6");
     let abstractPrint = "";
-    let wholeGreenRow = false;
+    
     for(let i=0; i<abstractBoxes.length; i++){
         const backgroundColor = window.getComputedStyle(abstractBoxes[i]).backgroundColor;
         if(i % 5 == 0){
@@ -643,24 +644,15 @@ const dateStamp = new Date(data.dateStamp);
 let gameOver = false;
 let isPractice = false;   //Used to prevent local storage manipulation
 closeBtn.classList.toggle("hidden");
-let completedToday = false;
-let turnsToWin = "X";
-
 //Datestamp will only be the same if the level is already attempted
 if(compareDates(currDate, dateStamp)){
-    completedToday = true;
-
     //Pull up version of overlay with different text, since user has already played
     const overlayTitle = document.querySelector("#overlay > h1");   
     overlayTitle.innerHTML = "Puzzle completed for the day!";
 
-    //Update turnsToWin to be correct value
-    turnsToWin = data.previousGuesses.length;
-
     recreateGame();
 }
 else{
-    data.wonToday = false;
     data.previousGuesses = [];
     localStorage.setItem("data", JSON.stringify(data));
     boxes[currentBox].classList.add("currentBox")
