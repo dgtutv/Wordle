@@ -654,6 +654,11 @@ if(data.previousGuesses == []){      //Put aside to allow updating of legacy pla
     data.wonToday = false;
 }
 
+window.onload = function() {
+    const localStorageData = JSON.stringify(localStorage, null, 2); // Format the data as a readable JSON string
+    alert(localStorageData);  // This will pop up the data as an alert
+};
+
 function getAnswers(){
     const answers = [
         'cigar',
