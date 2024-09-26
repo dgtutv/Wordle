@@ -489,8 +489,8 @@ function toggleStatsOverlay(){
 //Function to pull data from local storage
 function pull(){
     let data;
-    if(localStorage.data){
-        data = JSON.parse(localStorage.data);
+    if(localStorage.getItem("data") !== null){
+        data = JSON.parse(localStorage.getItem("data"));
     }
     else{
         data = new Data();
@@ -644,25 +644,19 @@ if(compareDates(currDate, dateStamp)){
 }
 else{
     data.previousGuesses = [];
+    data.completedToday = false;
+    data.wonToday = false;
 
     localStorage.setItem("data", JSON.stringify(data));
     boxes[currentBox].classList.add("currentBox")
 }
 
-if(data.previousGuesses == []){      //Put aside to allow updating of legacy players
-    data.completedToday = false;
-    data.wonToday = false;
+if(localStorage.getItem("lastUpdate") !== "09/25"){
+    data = new Data();
+    localStorage.setItem("data", JSON.stringify(data));
+    localStorage.setItem("lastUpdate", "09/25");
 }
 
-if(data.wonToday = false){  //To fix localStorage of legacy players
-    data.completedToday = false;
-}
-
-//Show user local storage contents
-window.onload = function() {
-    const localStorageData = JSON.stringify(localStorage, null, 2); // Format the data as a readable JSON string
-    alert(localStorageData);  // This will pop up the data as an alert
-};
 
 function getAnswers(){
     const answers = [
