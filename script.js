@@ -324,7 +324,6 @@ function endGame(win, answer, round, message) {
                     break;
             }
             data.wonToday = true;
-            data.completedToday = true;
         }
     } 
     else{
@@ -337,7 +336,7 @@ function endGame(win, answer, round, message) {
     }
 
     //Update streaks
-    if(!isPractice) {
+    if(!isPractice && !data.completedToday) {
         if(win){
             data.currentStreak++;
             data.maxStreak = Math.max(data.currentStreak, data.maxStreak);
@@ -470,7 +469,7 @@ function toggleStatsOverlay(){
     playedGames.innerHTML = data.wonGames + data.lostGames;
     winPercent.innerHTML =  Math.trunc((data.wonGames / (data.wonGames + data.lostGames)) * 100);
     currStreak.innerHTML = data.currentStreak;
-    maxStreak.innerHTML = data.longestStreak;
+    maxStreak.innerHTML = data.maxStreak;
 
     //Update the histogram
     const rows = document.querySelectorAll(".row > .bar");
@@ -513,7 +512,7 @@ class Data{
         this.sixGuessWin = 0;
         this.dateStamp = new Date();
         this.currentStreak = 0;
-        this.longestStreak = 0;
+        this.maxStreak = 0;
         this.previousGuesses = [];
         this.wonToday = false;
         this.completedToday = false
