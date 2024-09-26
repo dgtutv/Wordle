@@ -496,6 +496,7 @@ function pull(){
         data = new Data();
         localStorage.setItem("data", JSON.stringify(data));
     }
+
     return data;
 }
 
