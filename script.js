@@ -644,8 +644,14 @@ if(compareDates(currDate, dateStamp)){
 }
 else{
     data.previousGuesses = [];
+
     localStorage.setItem("data", JSON.stringify(data));
     boxes[currentBox].classList.add("currentBox")
+}
+
+if(data.previousGuesses == []){      //Put aside to allow updating of legacy players
+    data.completedToday = false;
+    data.wonToday = false;
 }
 
 function getAnswers(){
