@@ -654,6 +654,10 @@ if(data.previousGuesses == []){      //Put aside to allow updating of legacy pla
     data.wonToday = false;
 }
 
+if(data.wonToday = false){  //To fix localStorage of legacy players
+    data.completedToday = false;
+}
+
 //Show user local storage contents
 window.onload = function() {
     const localStorageData = JSON.stringify(localStorage, null, 2); // Format the data as a readable JSON string
