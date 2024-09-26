@@ -511,7 +511,7 @@ class Data{
         this.fourGuessWin = 0;
         this.fiveGuessWin = 0;
         this.sixGuessWin = 0;
-        this.dateStamp = dateStamp;
+        this.dateStamp = new Date();
         this.currentStreak = 0;
         this.longestStreak = 0;
         this.previousGuesses = [];
