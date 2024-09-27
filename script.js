@@ -45,24 +45,22 @@ keys.forEach((key) => {
         }
         let id = event.target.id;
         if(id == "DELETE"){
-            if(currentCol > 0){
-                if(currentBox < 30){
-                    boxes[currentBox].classList.remove("currentBox");
-                }
-
-                //If the current box is empty, delete the letter before 
-                if(boxes[currentBox].innerHTML === ""){
-                    currentBox--;
-                    currentCol--;
-                    boxes[currentBox].innerHTML = "";
-                }
-                //Otherwise, delete the box highlighted
-                else{
-                    boxes[currentBox].innerHTML = "";
-                }
-                boxes[currentBox].classList.remove("candidate");
-                boxes[currentBox].classList.add("currentBox");
+            if(currentBox < 30){
+                boxes[currentBox].classList.remove("currentBox");
             }
+
+            //If the current box is empty, delete the letter before 
+            if(boxes[currentBox].innerHTML === ""){
+                currentBox--;
+                currentCol--;
+                boxes[currentBox].innerHTML = "";
+            }
+            //Otherwise, delete the box highlighted
+            else{
+                boxes[currentBox].innerHTML = "";
+            }
+            boxes[currentBox].classList.remove("candidate");
+            boxes[currentBox].classList.add("currentBox");
         }
         else if(id == "ENTER"){
             //Check if whole line is filled in
