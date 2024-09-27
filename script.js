@@ -647,8 +647,15 @@ else{
     data.completedToday = false;
     data.wonToday = false;
 
+    let yesterday = new Date(currDate)
+    yesterday.setDate(yesterday.getDate() - 1)
+
+    if(!compareDates(dateStamp, yesterday)){    //If the user skipped a day
+        data.currentStreak = 0;
+    }
+
     localStorage.setItem("data", JSON.stringify(data));
-    boxes[currentBox].classList.add("currentBox")
+    boxes[currentBox].classList.add("currentBox");
 }
 
 if(localStorage.getItem("lastUpdate") !== "09/25"){
