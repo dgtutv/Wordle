@@ -51,15 +51,24 @@ keys.forEach((key) => {
 
             //If the current box is empty, delete the letter before 
             if(boxes[currentBox].innerHTML === ""){
-                currentBox--;
-                currentCol--;
-                boxes[currentBox].innerHTML = "";
+                if(currentCol > 0){
+                    currentBox--;
+                    currentCol--;
+                    boxes[currentBox].innerHTML = "";
+                    boxes[currentBox].classList.remove("candidate");
+                }
             }
             //Otherwise, delete the box highlighted
             else{
-                boxes[currentBox].innerHTML = "";
+                if(currentCol > 0){
+                    boxes[currentBox].innerHTML = "";
+                    boxes[currentBox].classList.remove("candidate");
+                }
+                else{
+                    boxes[currentBox].innerHTML = "";
+                    boxes[currentBox].classList.remove("candidate"); 
+                }
             }
-            boxes[currentBox].classList.remove("candidate");
             boxes[currentBox].classList.add("currentBox");
         }
         else if(id == "ENTER"){
@@ -109,31 +118,31 @@ document.addEventListener("keydown", (event) => {
     const key = event.key.toUpperCase();
     if (key.length !== 1) {
         if(key == "BACKSPACE"){
-                if(currentBox < 30){
-                    boxes[currentBox].classList.remove("currentBox");
-                }
+            if(currentBox < 30){
+                boxes[currentBox].classList.remove("currentBox");
+            }
 
-                //If the current box is empty, delete the letter before 
-                if(boxes[currentBox].innerHTML === ""){
-                    if(currentCol > 0){
-                        currentBox--;
-                        currentCol--;
-                        boxes[currentBox].innerHTML = "";
-                        boxes[currentBox].classList.remove("candidate");
-                    }
+            //If the current box is empty, delete the letter before 
+            if(boxes[currentBox].innerHTML === ""){
+                if(currentCol > 0){
+                    currentBox--;
+                    currentCol--;
+                    boxes[currentBox].innerHTML = "";
+                    boxes[currentBox].classList.remove("candidate");
                 }
-                //Otherwise, delete the box highlighted
+            }
+            //Otherwise, delete the box highlighted
+            else{
+                if(currentCol > 0){
+                    boxes[currentBox].innerHTML = "";
+                    boxes[currentBox].classList.remove("candidate");
+                }
                 else{
-                    if(currentCol > 0){
-                        boxes[currentBox].innerHTML = "";
-                        boxes[currentBox].classList.remove("candidate");
-                    }
-                    else{
-                        boxes[currentBox].innerHTML = "";
-                        boxes[currentBox].classList.remove("candidate"); 
-                    }
+                    boxes[currentBox].innerHTML = "";
+                    boxes[currentBox].classList.remove("candidate"); 
                 }
-                boxes[currentBox].classList.add("currentBox");
+            }
+            boxes[currentBox].classList.add("currentBox");
         }
         else if(key == "ENTER"){
             //Check if whole line is filled in
