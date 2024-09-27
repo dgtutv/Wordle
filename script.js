@@ -4,7 +4,7 @@ document.addEventListener('dblclick', function(event) {
 }, { passive: false });
 
 //Editing of words when a user clicks on the corresponding box
-const boxes = document.querySelectorAll(".letterBox");
+const boxes = document.querySelectorAll("#gameContainer > .letterBox");
 boxes.forEach((box) => {
     box.addEventListener('click', function(event){
         if(gameOver){   //No interactability with the finished game

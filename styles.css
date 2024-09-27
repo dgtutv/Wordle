@@ -51,8 +51,6 @@ body{
     -ms-user-select: none;
 }
 
-
-
 .keyboardBox.correctLetter{
     background-color: rgb(181, 159, 58);
 }
@@ -218,6 +216,48 @@ svg{
 .overlay h2{
     margin: 24px;
 }
+
+#helpOverlay{
+    overflow-y: auto;
+    font-weight: normal;
+    justify-content: flex-start;
+}
+
+#helpOverlay h1{
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+#helpOverlay h2{
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#helpOverlay li{
+    text-align: left;
+    font-size: 1.1rem;
+
+}
+
+#helpOverlay p{
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.exampleRow {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    align-items: center;
+    gap: 3px;
+} 
+
+#helpOverlay .letterBox{
+    width: 30px;
+    height: 30px;
+}
+
 
 #buttons{
     display: flex;

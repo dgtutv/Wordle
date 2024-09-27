@@ -144,6 +144,54 @@
             </div> 
         </div>
 
+        <div id="helpOverlay" class="overlay">
+            <h1>How to Play</h1>
+            <h2>Guess the word in 6 attempts.</h2>
+            <ul>
+                <li>Each guess must be a valid 5-letter word.</li>
+                <li>The color of the tiles will change to show how close your guess was to the word.</li>
+                <li>The word changes every day.</li>
+            </ul>
+            <h2>Features unique to <b>Wordle Ultimate:</b></h2>
+            <ul>
+                <li><b>Word Editing:</b> Click on a letter box (or select with arrow keys) to change or remove its contents.</li>
+                <li><b>Practice Mode:</b> Upon completion of the daily word, continue playing with randomized practice words.</li>
+            </ul>
+            <h2><b>Examples</b></h2>
+            <div class="exampleRow">
+                <div class="letterBox correctSpot">W</div>
+                <div class="letterBox">O</div>
+                <div class="letterBox">R</div>
+                <div class="letterBox">D</div>
+                <div class="letterBox">Y</div>
+            </div>
+            <p><b>W</b> is in the word and in the correct spot.</p>
+            <div class="exampleRow">
+                <div class="letterBox">L</div>
+                <div class="letterBox correctLetter">I</div>
+                <div class="letterBox">G</div>
+                <div class="letterBox">H</div>
+                <div class="letterBox">T</div>
+            </div>
+            <p><b>I</b> is in the word but in the wrong spot.</p>
+            <div class="exampleRow">
+                <div class="letterBox">R</div>
+                <div class="letterBox">O</div>
+                <div class="letterBox">G</div>
+                <div class="letterBox incorrectSpot">U</div>
+                <div class="letterBox">E</div>
+            </div>
+            <p><b>U</b> is not in the word in any spot.</p>
+            <div class="exampleRow">
+                <div class="letterBox"></div>
+                <div class="letterBox correctSpot">R</div>
+                <div class="letterBox"></div>
+                <div class="letterBox correctSpot">A</div>
+                <div class="letterBox correctSpot">K</div>
+            </div>
+            <p><b>Place</b> the letters you know, to help solve the rest.</p>
+        </div>
+
         <svg id="home" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>home</title><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
         <svg id="close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close</title><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>       
         <div id="errorList">
