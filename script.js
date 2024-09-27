@@ -647,6 +647,10 @@ if(compareDates(currDate, dateStamp)){
     const overlayTitle = document.querySelector("#overlay > h1");   
     overlayTitle.innerHTML = "Puzzle completed for the day!";
 
+    if(data.completedToday){
+        homeButton.classList.add("hidden");
+    }
+
     recreateGame();
 }
 else{
