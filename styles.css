@@ -312,6 +312,10 @@ button{
         background-color: rgb(82, 141, 77);
     }
 
+    #helpBtn:hover{
+        background-color: rgb(82, 141, 77);
+    }
+
     .keyboardBox:hover{
         cursor: pointer;
     }
