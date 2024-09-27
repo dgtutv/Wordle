@@ -399,6 +399,9 @@ const practiceBtn = document.querySelector("#practiceBtn");
 const overlay = document.querySelector("#overlay");
 const altOverlay = document.querySelector("#altOverlay");
 const abstractBoxes = document.querySelectorAll(".abstractBox.default");
+const helpOverlay = document.querySelector("#helpOverlay");
+const helpBtn = document.querySelector("#helpBtn");
+const helpBtnAlt = document.querySelector("#helpBtn.alt");
 
 closeBtn.addEventListener('click', function(event){
     if(data.completedToday){
@@ -434,6 +437,24 @@ statsBtnAlt.addEventListener('click', function(event){
     toggleStatsOverlay();    
 });
 
+helpBtn.addEventListener('click', function(event){
+    helpOverlay.classList.toggle("hidden");
+    overlay.classList.toggle("hidden");
+    closeBtn.classList.toggle("hidden");
+    keys.forEach((key) => {
+        key.classList.toggle("hidden");
+    });
+});
+
+helpBtnAlt.addEventListener('click', function(event){
+    helpOverlay.classList.toggle("hidden");
+    altOverlay.classList.toggle("hidden");
+    closeBtn.classList.toggle("hidden");
+    keys.forEach((key) => {
+        key.classList.toggle("hidden");
+    });
+});
+
 practiceBtn.addEventListener('click', function(event){
     overlay.classList.toggle("hidden");
     closeBtn.classList.toggle("hidden");
@@ -442,6 +463,7 @@ practiceBtn.addEventListener('click', function(event){
     });
     practiceMode();
 });
+
 
 //Practice mode functionality
 function practiceMode(){
@@ -543,6 +565,21 @@ homeButton.addEventListener('click', function(event){
             key.classList.toggle("hidden");
         });
     }
+
+    else if(!helpOverlay.classList.contains("hidden")){ //Help overlay is active
+        helpOverlay.classList.toggle("hidden");
+        if(data.completedToday){
+            overlay.classList.toggle("hidden");
+        }
+        else{
+            altOverlay.classList.toggle("hidden");
+        }
+        closeBtn.classList.toggle("hidden");
+        keys.forEach((key) => {
+            key.classList.toggle("hidden");
+        });
+    }
+
     else if(overlay.classList.contains("hidden")){  //No overlay is active
         if(data.completedToday){
             overlay.classList.toggle("hidden");
