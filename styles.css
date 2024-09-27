@@ -236,13 +236,16 @@ svg{
 
 #helpOverlay li{
     text-align: left;
-    font-size: 1.1rem;
+    margin: 0 10px 5px;
+}
 
+#helpOverlay ul{
+    margin-top: 5px;
 }
 
 #helpOverlay p{
     font-size: 1.2rem;
-    margin-top: 10px;
+    margin: 10px;
 }
 
 .exampleRow {
@@ -254,10 +257,26 @@ svg{
 } 
 
 #helpOverlay .letterBox{
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
+#helpOverlay .letterBox.correctLetter {
+    background-color: rgb(181, 159, 58) !important; 
+    border: 2px solid rgb(181, 159, 58) !important;
+}
+
+#helpOverlay .letterBox.correctSpot {
+    background-color: rgb(82, 141, 77) !important;
+    border: 2px solid rgb(82, 141, 77) !important;
+}
+
+#helpOverlay .letterBox.incorrectLetter {
+    background-color: rgb(58, 58, 58) !important;
+    border: 2px solid rgb(58, 58, 58) !important;
+}
 
 #buttons{
     display: flex;
