@@ -374,11 +374,10 @@ function endGame(win, answer, round, message) {
         keys.forEach((key) => {
             key.classList.toggle("hidden");
         });
-        const letterBoxes = document.querySelectorAll(".letterBox");
 
         //Setup the abstract boxes on the overlay
         for (let i = 0; i < abstractBoxes.length; i++) {
-            let letterBox = letterBoxes[i];
+            let letterBox = boxes[i];
             let abstractBox = abstractBoxes[i];
             let backgroundColor = window.getComputedStyle(letterBox).backgroundColor;
             if (backgroundColor == "rgba(0, 0, 0, 0)") {
