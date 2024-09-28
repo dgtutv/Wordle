@@ -391,7 +391,7 @@ function endGame(win, answer, round, message) {
 }
 
 
-//Event handlers for overlay & altOverlay
+//Event handlers for overlays and buttons
 const closeBtn = document.querySelector("#close");
 const statsBtn = document.querySelector("#statsBtn");
 const statsBtnAlt = document.querySelector("#statsBtn.alt")
