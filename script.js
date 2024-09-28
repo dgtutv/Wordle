@@ -575,11 +575,6 @@ function pull(){
         //Define our data
         data = new Data();
         localStorage.setItem("data", JSON.stringify(data));
-
-        //Pull up the helpOverlay, with no home button but an exit button
-        helpOverlay.classList.toggle("hidden");
-        closeBtn.classList.toggle("hidden");
-        homeButton.classList.toggle("hidden");
     }
 
     return data;
@@ -717,10 +712,15 @@ else{
     boxes[currentBox].classList.add("currentBox");
 }
 
-if(localStorage.getItem("lastUpdate") !== "09/25"){
+if(localStorage.getItem("lastUpdate") !== "09/28"){
     data = new Data();
     localStorage.setItem("data", JSON.stringify(data));
-    localStorage.setItem("lastUpdate", "09/25");
+    localStorage.setItem("lastUpdate", "09/28");
+
+    //Pull up the helpOverlay, with no home button but an exit button
+    helpOverlay.classList.toggle("hidden");
+    closeBtn.classList.toggle("hidden");
+    homeButton.classList.toggle("hidden");
 }
 
 
