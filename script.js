@@ -404,6 +404,12 @@ const helpBtn = document.querySelector("#helpBtn");
 const helpBtnAlt = document.querySelector("#helpBtn.alt");
 
 closeBtn.addEventListener('click', function(event){
+    if(!helpOverlay.classList.contains("hidden")){  //The help overlay is being displayed
+        helpOverlay.classList.toggle("hidden");
+        homeButton.classList.toggle("hidden");
+        closeBtn.classList.toggle("hidden");
+        return;
+    }
     if(data.completedToday){
         overlay.classList.toggle("hidden");
         if(isPractice){     //If in practice mode, we should recreate the original game to show the user
@@ -464,6 +470,51 @@ practiceBtn.addEventListener('click', function(event){
     practiceMode();
 });
 
+const homeButton = document.querySelector("#home");
+homeButton.addEventListener('click', function(event){
+    const statsOverlay = document.querySelector("#statsOverlay");
+    if(!statsOverlay.classList.contains("hidden")){  //Stats overlay is active
+        statsOverlay.classList.toggle("hidden");
+        if(data.completedToday){
+            overlay.classList.toggle("hidden");
+        }
+        else{
+            altOverlay.classList.toggle("hidden");
+        }
+        closeBtn.classList.toggle("hidden");
+        keys.forEach((key) => {
+            key.classList.toggle("hidden");
+        });
+    }
+
+    else if(!helpOverlay.classList.contains("hidden")){ //Help overlay is active
+        helpOverlay.classList.toggle("hidden");
+        if(data.completedToday){
+            overlay.classList.toggle("hidden");
+        }
+        else{
+            altOverlay.classList.toggle("hidden");
+        }
+        closeBtn.classList.toggle("hidden");
+        keys.forEach((key) => {
+            key.classList.toggle("hidden");
+        });
+    }
+
+    else if(overlay.classList.contains("hidden")){  //No overlay is active
+        if(data.completedToday){
+            overlay.classList.toggle("hidden");
+        }
+        else{
+            altOverlay.classList.toggle("hidden");
+        }
+        closeBtn.classList.toggle("hidden");
+        keys.forEach((key) => {
+            key.classList.toggle("hidden");
+        });
+    }
+});
+
 
 //Practice mode functionality
 function practiceMode(){
@@ -515,15 +566,21 @@ function toggleStatsOverlay(){
     }
 }
 
-//Function to pull data from local storage
+//Function to pull data from local storage, and control first-time behaviour of the site
 function pull(){
     let data;
     if(localStorage.getItem("data") !== null){
         data = JSON.parse(localStorage.getItem("data"));
     }
-    else{
+    else{       //User's first time on the site
+        //Define our data
         data = new Data();
         localStorage.setItem("data", JSON.stringify(data));
+
+        //Pull up the helpOverlay, with no home button but an exit button
+        helpOverlay.classList.toggle("hidden");
+        closeBtn.classList.toggle("hidden");
+        homeButton.classList.toggle("hidden");
     }
 
     return data;
@@ -548,51 +605,6 @@ class Data{
         this.completedToday = false
     }
 }
-
-const homeButton = document.querySelector("#home");
-homeButton.addEventListener('click', function(event){
-    const statsOverlay = document.querySelector("#statsOverlay");
-    if(!statsOverlay.classList.contains("hidden")){  //Stats overlay is active
-        statsOverlay.classList.toggle("hidden");
-        if(data.completedToday){
-            overlay.classList.toggle("hidden");
-        }
-        else{
-            altOverlay.classList.toggle("hidden");
-        }
-        closeBtn.classList.toggle("hidden");
-        keys.forEach((key) => {
-            key.classList.toggle("hidden");
-        });
-    }
-
-    else if(!helpOverlay.classList.contains("hidden")){ //Help overlay is active
-        helpOverlay.classList.toggle("hidden");
-        if(data.completedToday){
-            overlay.classList.toggle("hidden");
-        }
-        else{
-            altOverlay.classList.toggle("hidden");
-        }
-        closeBtn.classList.toggle("hidden");
-        keys.forEach((key) => {
-            key.classList.toggle("hidden");
-        });
-    }
-
-    else if(overlay.classList.contains("hidden")){  //No overlay is active
-        if(data.completedToday){
-            overlay.classList.toggle("hidden");
-        }
-        else{
-            altOverlay.classList.toggle("hidden");
-        }
-        closeBtn.classList.toggle("hidden");
-        keys.forEach((key) => {
-            key.classList.toggle("hidden");
-        });
-    }
-});
 
 function recreateGame(){
     //Empty all the boxes
