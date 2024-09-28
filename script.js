@@ -624,7 +624,10 @@ function recreateGame(){
 
 //A function to generate the message sent by the share button
 function generateResults(){
-    let turnsToWin = data.previousGuesses.length;
+    let turnsToWin = "X";
+    if(data.wonToday){
+        turnsToWin = data.previousGuesses.length;
+    }
     const today = new Date();
     const printDate = `${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}/${today.getFullYear()}`;
     let firstLine = "Wordle Ultimate".concat(", ", printDate, ", ", turnsToWin, "/6");
